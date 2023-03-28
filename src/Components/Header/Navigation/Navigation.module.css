@@ -1,0 +1,24 @@
+.Navigation {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout {
+    font-size: large;
+    margin-top: 30px;
+    border: 0;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: .3s;
+    background-color: #fb743e;
+    color: white;
+}
+
+.logout:hover {
+    background-color: #d3450d;
+}
