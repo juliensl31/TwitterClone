@@ -1,12 +1,9 @@
 // Librairies
 import React, { useState, useEffect } from 'react';
 import axios from '../../config/axios-firebase';
-import classes from './Tweets.module.css';
 
 // Composant
 import DisplayedTweets from '../../Components/DisplayedTweets/DisplayedTweets';
-import { Link } from 'react-router-dom';
-import routes from '../../config/routes';
 
 function Tweets() {
 
@@ -48,9 +45,6 @@ function Tweets() {
     return (
         <>
             <h1>Tweets</h1>
-            <Link exact to={routes.MANAGE_TWEET} >
-                <button className={classes.button}>Ajouter un Tweet</button>
-            </Link>
             <DisplayedTweets tweets={tweets} />
         </>
     );

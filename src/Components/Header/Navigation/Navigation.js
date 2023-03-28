@@ -20,7 +20,8 @@ function Navigation(props) {
         <ul className={classes.Navigation}>
             <NavigationItem exact to={routes.HOME}>Home</NavigationItem>
             <NavigationItem to={routes.SUBSCRIPTION}>Abonnement</NavigationItem>
-            {props.user ? <NavigationItem exact to={routes.TWEETS}>Mes Tweet</NavigationItem> : null}
+            {props.user ? <NavigationItem exact to={routes.TWEETS}>Mes Tweets</NavigationItem> : null}
+            {props.user ? <NavigationItem to={routes.MANAGE_TWEET}>Ajouter un Tweet</NavigationItem> : null}
             <NavigationItem to={routes.CONTACT}>Contact</NavigationItem>
             {props.user ?<button onClick={logoutClickedHandler} className={classes.logout}>Déconnexion</button> : null}
         </ul>

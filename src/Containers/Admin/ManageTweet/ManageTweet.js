@@ -17,8 +17,7 @@ function ManageTweet(props) {
         titre: {
             elementType: 'input',
             elementConfig: {
-                type: 'text',
-                placeholder: "Titre"
+                type: 'text'
             },
             value: props.location.state && props.location.state.tweet ? props.location.state.tweet.titre : '',
             label: 'Titre',
@@ -138,7 +137,7 @@ function ManageTweet(props) {
                         .then(response => {
                             console.log(response);
                             toast.success('tweet ajouté avec succès');
-                            props.history.replace(routes.HOME);
+                            props.history.replace(routes.TWEETS);
                         })
                         .catch(error => {
                             console.log(error);

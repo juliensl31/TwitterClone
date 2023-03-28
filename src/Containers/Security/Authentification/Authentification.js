@@ -171,7 +171,7 @@ function Authentification(props) {
             <div className={classes.buttons}>
                     <button onClick={registerClickedHandler} disabled={!valid} className={classes.button}>Inscription</button>
                     <button onClick={loginClickedHandler} disabled={!valid} className={classes.button}>Connexion</button>  
-                    <button className={classes.button} onClick={loginGoogleClickedHandler}>Se connecter avec Google<LogoGoogle/></button>
+                    <button className={classes.buttonGoogle} onClick={loginGoogleClickedHandler}>Se connecter avec Google<LogoGoogle/></button>
 
 
             </div>
