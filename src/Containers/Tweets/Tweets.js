@@ -27,8 +27,6 @@ function Tweets() {
             // Chronologie
             tweetsArray.reverse();
 
-            // Trier
-            tweetsArray = tweetsArray.filter(tweet => tweet.brouillon === "false");
 
             setTweets(tweetsArray);
         })

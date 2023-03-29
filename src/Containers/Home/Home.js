@@ -30,9 +30,6 @@ function Home() {
                // Chronologie
                tweetsArray.reverse();
 
-               // Trier
-               tweetsArray = tweetsArray.filter(tweet => tweet.brouillon === "false");
-
                // Limiter à 3
                tweetsArray = tweetsArray.slice(0, 3);
    
@@ -48,10 +45,10 @@ function Home() {
     });
    
     return (
-        <>
+        <div className='container'> 
             <h1>Actu</h1>
             <DisplayedTweets tweets={tweets} />
-        </>
+        </div>
     );
 }
 

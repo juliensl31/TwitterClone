@@ -55,6 +55,18 @@ function ManageTweet(props) {
             },
             touched: false,
             errorMessage: 'Le contenu ne doit pas être vide.'
+        },
+        hashtag: {
+            elementType: 'textarea',
+            elementConfig: {},
+            value: props.location.state && props.location.state.tweet ? props.location.state.tweet.hashtag : '',
+            label: "Hashtag",
+            valid: props.location.state && props.location.state.tweet ? true : false,
+            validation: {
+                required: true
+            },
+            touched: false,
+            errorMessage: 'Les hashtags ne doivent pas être vide.'
         }
     });
 
@@ -105,17 +117,47 @@ function ManageTweet(props) {
         return str;
     };
 
+    const strRandom = (auteur) => {
+        let a = 10,
+            b = 'abcdefghijklmnopqrstuvwxyz',
+            c = '',
+            d = 0,
+            e = ''+b;
+        if (auteur) {
+          if (auteur.startsWithLowerCase) {
+            c = b[Math.floor(Math.random() * b.length)];
+            d = 1;
+          }
+          if (auteur.length) {
+            a = auteur.length;
+          }
+          if (auteur.includeUpperCase) {
+            e += b.toUpperCase();
+          }
+          if (auteur.includeNumbers) {
+            e += '1234567890';
+          }
+        }
+        for (; d < a; d++) {
+          c += e[Math.floor(Math.random() * e.length)];
+        }
+        return c;
+    };
+
     const formHandler = event => {
         event.preventDefault();
 
         const slug = generateSlug(inputs.titre.value);
+        const auteur = strRandom();
 
         const tweet = {
             titre: inputs.titre.value,
             contenu: inputs.contenu.value,
             accroche: inputs.accroche.value,
+            hashtag: inputs.hashtag.value,
             date: Date.now(),
-            slug: slug
+            slug: slug,
+            auteur: auteur
         };
 
         fire.auth().currentUser.getIdToken()
@@ -126,7 +168,7 @@ function ManageTweet(props) {
                     .then(response => {
                         console.log(response);
                         toast.success('tweet modifié avec succès');
-                        props.history.replace(routes.HOME + '/' + tweet.slug);
+                        props.history.replace(routes.TWEETS + '/' + tweet.slug);
                     })
                     .catch(error => {
                         console.log(error);

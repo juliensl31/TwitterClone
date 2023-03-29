@@ -18,7 +18,7 @@ function Layout(props) {
                   <Header user={props.user}/>  
                 </div>
 
-                <div className={classes.content}>
+                <div className={[classes.content, 'container'].join(' ')}>
                     {props.children}    
                 </div>
 

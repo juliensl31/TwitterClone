@@ -6,7 +6,7 @@ import classes from './DisplayedTweets.module.css';
 function DisplayedTweets(props) {
 
     let tweets = props.tweets.map(tweet => (
-        <DisplayedTweet key={tweet.id} article={tweet}/>
+        <DisplayedTweet key={tweet.id} tweet={tweet}/>
     ));
 
     return (

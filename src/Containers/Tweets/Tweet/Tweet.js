@@ -20,6 +20,7 @@ function Tweet(props) {
         .then(response =>{
 
             if(Object.keys(response.data).length === 0) {
+                console.log(response);
                 toast.error("Cet tweet n'existe pas !");
                 props.history.push(routes.HOME);
             }
@@ -50,7 +51,7 @@ function Tweet(props) {
             axios.delete('/tweets/' + tweet.id + '.json?auth=' + token)
                 .then(response =>{
                     toast.success('Tweet supprimé avec succès.');
-                    props.history.replace(routes.HOME);
+                    props.history.push(routes.HOME);
                 })
                 .catch(error => {
                     console.log(error);
@@ -65,6 +66,11 @@ function Tweet(props) {
     // let date = new Date(tweet.date).toLocaleDateString('fr-FR');
     moment.locale('fr');
     let date = moment.unix(tweet.date / 1000).calendar();
+
+    // let contenu = '';
+    // if(tweet.contenu) {
+    //     contenu  = tweet.contenu.split('\n').map(str => <p>{str}</p>)
+    // }
 
     return (
         <div className='container'>
@@ -98,7 +104,6 @@ function Tweet(props) {
                 <span>
                     Publié {date}.
                 </span>
-                {tweet.brouillon === "true" ? <span className={classes.badge}>Brouillon</span> : null}
             </div>
            
         </div>
