@@ -4,6 +4,10 @@
     margin: 0 auto;
 }
 
+:global svg {
+    margin: 0 !important;
+}
+
 .Layout {
     display: flex;
     flex-direction: column;
@@ -17,4 +21,9 @@
 
 .content {
     flex-grow: 1;
+}
+
+.auth {
+    margin-right: 50px;
+    padding: 20px;
 }

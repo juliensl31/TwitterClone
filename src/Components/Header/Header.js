@@ -9,11 +9,8 @@ import Navigation from './Navigation/Navigation';
 function Header(props) {
     return (
         <header className={classes.Header}>
-            <div className={['container', classes.flex].join(' ')}>
-                <div>
+            <div className={classes.flex}>
                     <LogoSite/>
-                </div>
-
                 <nav>
                     <Navigation user={props.user} />
                 </nav>

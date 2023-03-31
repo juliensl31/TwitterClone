@@ -1,0 +1,40 @@
+.Account {
+    width: 400px;
+    background-color: #0018337a;
+    color: white;
+    padding: 30px;
+    margin-top: 50px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.Account h1 {
+    text-align: center;
+    margin-top: 0px;
+}
+
+.button {
+    border: 0;
+    padding: 10px 15px;
+    background-color: #fb743e;
+    color: white;
+    margin-top: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 30px;
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+}
+.button:focus,
+.button:hover {
+    background-color: #d3450d;
+}
+
+.items {
+    display: flex;
+    font-size: small;
+    font-weight: 200;
+    padding: 10px;
+}
