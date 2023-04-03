@@ -3,10 +3,11 @@
     margin-bottom: 15px;
 }
 
-.content {
+.section {
     text-align: left;
     padding: 30px;
 }
+
 
 .author {
     background-color: #57960f;
@@ -38,12 +39,4 @@
 .button button:focus,
 .button button:hover {
     background-color: #d3450d;
-}
-
-.badge {
-    font-size: .9rem;
-    background-color: #ccc;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
 }

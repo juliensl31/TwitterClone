@@ -70,12 +70,30 @@ function ManageTweet(props) {
         }
     });
 
+    //State
+    const [user, setUser] = useState(' ');
     const [valid, setValid] = useState(props.location.state && props.location.state.tweet ? true : false);
 
     // ComponentDidUpdate
     useEffect(() => {
         document.title = "Mon compte";
     });
+
+        //ComponentDidMount
+        useEffect(() => {
+            authListener();
+        },[]);
+    
+        const authListener = () => {
+            fire.auth().onAuthStateChanged(user => {
+            if(user) {
+                setUser(user);
+            }
+            else {
+                setUser('')
+            }
+            });
+        } ;
 
     // Fonctions
     const inputChangedHandler = (event, id) => {
@@ -157,7 +175,7 @@ function ManageTweet(props) {
             hashtag: inputs.hashtag.value,
             date: Date.now(),
             slug: slug,
-            auteur: auteur
+            auteur: user.displayName
         };
 
         fire.auth().currentUser.getIdToken()

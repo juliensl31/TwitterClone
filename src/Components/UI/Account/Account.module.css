@@ -35,6 +35,17 @@
 .items {
     display: flex;
     font-size: small;
-    font-weight: 200;
+    font-weight: 400;
     padding: 10px;
+    justify-content: space-between;
 }
+
+.items a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+svg {
+    margin: 10px !important;
+}
+

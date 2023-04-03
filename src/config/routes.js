@@ -1,7 +1,7 @@
 const routes = {
     HOME: '/',
     CONTACT: '/contact',
-    SUBSCRIPTION: '/abonnement',
+    ACCOUNT: '/abonnement',
     TWEETS: '/tweets',
     MANAGE_TWEET: '/admin/tweet'
 }

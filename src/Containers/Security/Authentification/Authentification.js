@@ -14,6 +14,21 @@ function Authentification(props) {
 
     // States
     const [inputs, setInputs] = useState({
+        pseudo: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                placeholder: "Pseudo"
+            },
+            value: '',
+            label: 'pseudo',
+            valid: false,
+            validation: {
+                required: true
+            },
+            touched: false,
+            errorMessage: "Le pseudo n'est pas valide."
+        },
         email: {
             elementType: 'input',
             elementConfig: {
@@ -50,6 +65,7 @@ function Authentification(props) {
     const [valid, setValid] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [loginError, setLoginError] = useState(false);
+    
 
     // Fonctions
     const inputChangedHandler = (event, id) => {
@@ -74,20 +90,23 @@ function Authentification(props) {
 
     const registerClickedHandler = () => {
 
+
         const user = {
             email: inputs.email.value,
             password: inputs.password.value
         };
 
-        fire
-            .auth()
+        let displayName;
+        // let photoURL;
+
+        fire.auth()
             .createUserWithEmailAndPassword(user.email, user.password)
             .then(response => {
                 toast.success('Bienvenue');
                 props.history.push(routes.HOME);
             })
             .catch(error => {
-                switch(error.code) {
+                switch (error.code) {
                     case 'auth/email-already-in-use':
                         setEmailError(true);
                         break;
@@ -95,7 +114,24 @@ function Authentification(props) {
                         break;
                 }
             });
-    }
+
+        fire.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                user.updateProfile({ 
+                displayName: inputs.pseudo.value,
+                // photoURL: "https://example.com/jane-q-user/profile.jpg"
+                })
+                .then(response => {
+                    displayName = user.displayName;
+                    // photoURL = user.photoURL;
+                })
+                .catch(error => {
+                    console.log(error);
+                });     
+
+            }
+        });
+    };
 
     const loginClickedHandler = () => {
 
@@ -169,7 +205,7 @@ function Authentification(props) {
                     changed={(e) => inputChangedHandler(e, formElement.id)} />
             ))}
             <div className={classes.buttons}>
-                    <button onClick={registerClickedHandler} disabled={!valid} className={classes.button}>Inscription</button>
+                    <button type='submit' onClick={registerClickedHandler} disabled={!valid} className={classes.button}>Inscription</button>
                     <button onClick={loginClickedHandler} disabled={!valid} className={classes.button}>Connexion</button>  
                     <button className={classes.buttonGoogle} onClick={loginGoogleClickedHandler}>Se connecter avec Google<LogoGoogle/></button>
 

@@ -17,7 +17,7 @@ import Authentification from './Containers/Security/Authentification/Authentific
 function App() {
 
   //State
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(' ');
 
   //ComponentDidMount
   useEffect(() => {

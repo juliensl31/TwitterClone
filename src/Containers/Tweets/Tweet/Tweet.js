@@ -75,22 +75,22 @@ function Tweet(props) {
     return (
         <div className='container'>
             <h1>{tweet.titre}</h1>
-            <div className={classes.content}>
+            <div className={classes.section}>
                 <div className={classes.lead}>
                     {tweet.accroche}
                 </div>
-                {tweet.contenu}
+                <div className={classes.content}>
+                   {tweet.contenu} 
+                </div>
+                
 
                 {props.user ? 
                 
                     <div className={classes.button}>
-                        <Link to={{
-                            pathname: routes.MANAGE_TWEET,
-                            state: { tweet: tweet }
-                        }}>
+                        <Link to={{pathname: routes.MANAGE_TWEET, state: { tweet: tweet }}}>
                             <button>Modifier</button> 
                         </Link>
-                        <button onClick={deleteClickedHandler}>Supprimer</button>  
+                            <button onClick={deleteClickedHandler}>Supprimer</button>  
                     </div> 
                     
                     :
