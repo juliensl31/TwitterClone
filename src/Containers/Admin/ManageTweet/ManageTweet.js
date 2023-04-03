@@ -165,6 +165,7 @@ function ManageTweet(props) {
     const formHandler = event => {
         event.preventDefault();
 
+        
         const slug = generateSlug(inputs.titre.value);
         const auteur = strRandom();
 
