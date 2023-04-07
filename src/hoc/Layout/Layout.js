@@ -8,7 +8,7 @@ import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import Authentification from '../../Containers/Security/Authentification/Authentification';
-import Account from '../../Components/UI/Account/Account';
+import Profile from '../../Components/UI/Profile/Profile';
 
 
 function Layout(props) {
@@ -24,7 +24,7 @@ function Layout(props) {
                 </div>
 
                 <div className={classes.auth}>
-                   {!props.user ? <Authentification/> : <Account/> }
+                   {!props.user ? <Authentification/> : <Profile/> }
                 </div>
 
                 <ToastContainer 

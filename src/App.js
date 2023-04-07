@@ -13,6 +13,7 @@ import Tweets from './Containers/Tweets/Tweets';
 import Tweet from './Containers/Tweets/Tweet/Tweet';
 import ManageTweet from './Containers/Admin/ManageTweet/ManageTweet';
 import Authentification from './Containers/Security/Authentification/Authentification';
+import Accounts from './Containers/Accounts/Accounts';
 
 function App() {
 
@@ -43,8 +44,9 @@ function App() {
           <Route path={routes.CONTACT} component={Contact} />
           <Route exact path={routes.TWEETS} component={Tweets} />
           <Route exact path={routes.TWEETS + "/:slug"} render={() => <Tweet user={user} />} />
-          {user ? <Route exact path={routes.MANAGE_TWEET} component={ManageTweet}/> : null}
-          {!user ? <Route exact path={routes.AUTHENTIFICATION} component={Authentification}/> : null}
+          <Route exact path={routes.ACCOUNTS} component={Accounts} />
+          {user ? <Route exact path={routes.MANAGE_TWEET} component={ManageTweet} /> : null}
+          {!user ? <Route exact path={routes.AUTHENTIFICATION} component={Authentification} /> : null}
           <Route render={() => <h1>404</h1>} />
         </Switch>
       </Layout>

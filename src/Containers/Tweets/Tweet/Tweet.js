@@ -50,7 +50,7 @@ function Tweet(props) {
         .then(token => {
             axios.delete('/tweets/' + tweet.id + '.json?auth=' + token)
                 .then(response =>{
-                    toast.success('Tweet supprimé avec succès.');
+                    toast('Tweet supprimé avec succès.');
                     props.history.push(routes.HOME);
                 })
                 .catch(error => {

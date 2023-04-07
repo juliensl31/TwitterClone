@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import fire from '../../../config/firebase';
 import routes from '../../../config/routes';
-import classes from './Account.module.css';
+import classes from './Profile.module.css';
+import { toast } from 'react-toastify';
 
 
-function Account(props) {
+function Profile(props) {
 
     //State
     const [user, setUser] = useState(' ');
@@ -15,6 +16,7 @@ function Account(props) {
     //ComponentDidMount
     useEffect(() => {
         authListener();
+       
     },[]);
 
     const authListener = () => {
@@ -26,20 +28,24 @@ function Account(props) {
             setUser('')
         }
         });
+         return () => {
+            authListener();
+          };
     } ;
 
     // Fonction
     const logoutClickedHandler = () => {
         fire.auth().signOut();
+        toast('Au revoir !');
         props.history.push(routes.HOME);
     };
 
     return (
-        <div className={classes.Account}>
+        <div className={classes.Profile}>
             <h1>Compte</h1>
             <p>{user.displayName}</p>
             <div className={classes.items}>
-                    <Link to={routes.ACCOUNT}>
+                    <Link to={routes.ACCOUNTS}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                         </svg>
@@ -65,4 +71,4 @@ function Account(props) {
 }
 
 
-export default withRouter(Account);
+export default withRouter(Profile);

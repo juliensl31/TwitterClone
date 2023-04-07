@@ -9,6 +9,7 @@ import Input from '../../../Components/UI/Input/Input';
 import routes from '../../../config/routes';
 import { toast } from 'react-toastify';
 import LogoGoogle from '../../../Components/UI/Logo/LogoGoogle';
+import axios from '../../../config/axios-firebase';
 
 function Authentification(props) {
 
@@ -62,10 +63,13 @@ function Authentification(props) {
             errorMessage: "Le mot de passe doit faire au moins 6 caractères."
         }
     });
+
     const [valid, setValid] = useState(false);
     const [emailError, setEmailError] = useState(false);
-    const [loginError, setLoginError] = useState(false);
-    
+    const [loginError, setLoginError] = useState(false);    
+    const pseudo = {pseudo: '@' + inputs.pseudo.value}
+    let displayName;
+    // let photoURL;  
 
     // Fonctions
     const inputChangedHandler = (event, id) => {
@@ -93,16 +97,20 @@ function Authentification(props) {
 
         const user = {
             email: inputs.email.value,
-            password: inputs.password.value
+            password: inputs.password.value,
         };
-
-        let displayName;
-        // let photoURL;
 
         fire.auth()
             .createUserWithEmailAndPassword(user.email, user.password)
             .then(response => {
-                toast.success('Bienvenue');
+                axios.post('/users.json', pseudo)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                toast('Bienvenue');
                 props.history.push(routes.HOME);
             })
             .catch(error => {
@@ -115,10 +123,10 @@ function Authentification(props) {
                 }
             });
 
-        fire.auth().onAuthStateChanged(function(user) {
+        fire.auth().onAuthStateChanged( (user) => {
             if (user) {
                 user.updateProfile({ 
-                displayName: inputs.pseudo.value,
+                displayName: '@' + inputs.pseudo.value,
                 // photoURL: "https://example.com/jane-q-user/profile.jpg"
                 })
                 .then(response => {
@@ -128,9 +136,9 @@ function Authentification(props) {
                 .catch(error => {
                     console.log(error);
                 });     
-
             }
         });
+            
     };
 
     const loginClickedHandler = () => {
@@ -144,7 +152,7 @@ function Authentification(props) {
             .auth()
             .signInWithEmailAndPassword(user.email, user.password)
             .then(response => {
-                toast.success('Vous revoici !');
+                toast('Vous revoici !');
                 props.history.push(routes.HOME);
             })
             .catch(error => {
@@ -162,15 +170,39 @@ function Authentification(props) {
     }
 
     const loginGoogleClickedHandler = () => {
+
         fire
         .auth()
         .signInWithPopup(provider)
         .then(response => {
-            toast.success('Bienvenue');
+            axios.post('/users.json', pseudo)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            toast('Bienvenue');
             props.history.push(routes.HOME);
         })
         .catch(error => {
            console.log(error);
+        });
+
+        fire.auth().onAuthStateChanged( (user) => {
+            if (user) {
+                user.updateProfile({ 
+                displayName: '@' + inputs.pseudo.value,
+                // photoURL: "https://example.com/jane-q-user/profile.jpg"
+                })
+                .then(response => {
+                    displayName = user.displayName;
+                    // photoURL = user.photoURL;
+                })
+                .catch(error => {
+                    console.log(error);
+                });     
+            }
         });
     };
     
@@ -207,7 +239,7 @@ function Authentification(props) {
             <div className={classes.buttons}>
                     <button type='submit' onClick={registerClickedHandler} disabled={!valid} className={classes.button}>Inscription</button>
                     <button onClick={loginClickedHandler} disabled={!valid} className={classes.button}>Connexion</button>  
-                    <button className={classes.buttonGoogle} onClick={loginGoogleClickedHandler}>Se connecter avec Google<LogoGoogle/></button>
+                    <button className={classes.buttonGoogle} disabled={!inputs.pseudo.value} onClick={loginGoogleClickedHandler}>Se connecter avec Google<LogoGoogle/></button>
 
 
             </div>

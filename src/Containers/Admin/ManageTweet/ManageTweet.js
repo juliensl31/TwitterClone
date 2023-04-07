@@ -116,6 +116,7 @@ function ManageTweet(props) {
         setValid(formIsValid);
     };
 
+    // Générer un slug
     const generateSlug = str => {
         str = str.replace(/^\s+|\s+$/g, ''); // trim
         str = str.toLowerCase();
@@ -135,39 +136,40 @@ function ManageTweet(props) {
         return str;
     };
 
-    const strRandom = (auteur) => {
-        let a = 10,
-            b = 'abcdefghijklmnopqrstuvwxyz',
-            c = '',
-            d = 0,
-            e = ''+b;
-        if (auteur) {
-          if (auteur.startsWithLowerCase) {
-            c = b[Math.floor(Math.random() * b.length)];
-            d = 1;
-          }
-          if (auteur.length) {
-            a = auteur.length;
-          }
-          if (auteur.includeUpperCase) {
-            e += b.toUpperCase();
-          }
-          if (auteur.includeNumbers) {
-            e += '1234567890';
-          }
-        }
-        for (; d < a; d++) {
-          c += e[Math.floor(Math.random() * e.length)];
-        }
-        return c;
-    };
+    // Générer une chaîne de caractères aléatoire
+    // const strRandom = (auteur) => {
+    //     let a = 10,
+    //         b = 'abcdefghijklmnopqrstuvwxyz',
+    //         c = '',
+    //         d = 0,
+    //         e = ''+b;
+    //     if (auteur) {
+    //       if (auteur.startsWithLowerCase) {
+    //         c = b[Math.floor(Math.random() * b.length)];
+    //         d = 1;
+    //       }
+    //       if (auteur.length) {
+    //         a = auteur.length;
+    //       }
+    //       if (auteur.includeUpperCase) {
+    //         e += b.toUpperCase();
+    //       }
+    //       if (auteur.includeNumbers) {
+    //         e += '1234567890';
+    //       }
+    //     }
+    //     for (; d < a; d++) {
+    //       c += e[Math.floor(Math.random() * e.length)];
+    //     }
+    //     return c;
+    // };
 
     const formHandler = event => {
         event.preventDefault();
 
         
         const slug = generateSlug(inputs.titre.value);
-        const auteur = strRandom();
+        // const auteur = strRandom();
 
         const tweet = {
             titre: inputs.titre.value,
@@ -186,7 +188,7 @@ function ManageTweet(props) {
                     axios.put('/tweets/' + props.location.state.tweet.id + '.json?auth=' + token, tweet)
                     .then(response => {
                         console.log(response);
-                        toast.success('tweet modifié avec succès');
+                        toast('tweet modifié avec succès');
                         props.history.replace(routes.TWEETS + '/' + tweet.slug);
                     })
                     .catch(error => {
@@ -197,7 +199,7 @@ function ManageTweet(props) {
                     axios.post('/tweets.json?auth=' + token, tweet)
                         .then(response => {
                             console.log(response);
-                            toast.success('tweet ajouté avec succès');
+                            toast('tweet ajouté avec succès');
                             props.history.replace(routes.TWEETS);
                         })
                         .catch(error => {

@@ -1,4 +1,4 @@
-.Account {
+.Profile {
     width: 400px;
     background-color: #0018337a;
     color: white;
@@ -8,7 +8,7 @@
     text-align: center;
 }
 
-.Account h1 {
+.Profile h1 {
     text-align: center;
     margin-top: 0px;
 }
