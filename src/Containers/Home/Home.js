@@ -29,9 +29,6 @@ function Home() {
 
                // Chronologie
                tweetsArray.reverse();
-
-               // Limiter à 3
-            //    tweetsArray = tweetsArray.slice(0, 3);
    
                sets(tweetsArray);
            })

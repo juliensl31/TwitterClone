@@ -4,6 +4,7 @@ import fire from "../../config/firebase";
 function Accounts() {
 
     //State
+    // eslint-disable-next-line
     const [user, setUser] = useState(' ');
 
     //ComponentDidMount

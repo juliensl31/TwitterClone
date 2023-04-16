@@ -23,7 +23,7 @@ function Authentification(props) {
             },
             value: '',
             label: 'pseudo',
-            valid: false,
+            valid: true,
             validation: {
                 required: true
             },
@@ -68,6 +68,7 @@ function Authentification(props) {
     const [emailError, setEmailError] = useState(false);
     const [loginError, setLoginError] = useState(false);    
     const pseudo = {pseudo: '@' + inputs.pseudo.value}
+    // eslint-disable-next-line
     let displayName;
     // let photoURL;  
 
@@ -92,9 +93,21 @@ function Authentification(props) {
         setValid(formIsValid);
     };
 
+     // Concaténer et capitaliser le pseudo 
+    const toCapitalizeFirst = str => {
+        const capitalizeFirst = str
+            .toLowerCase()
+            .split(' ')
+            .map(word => {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+            })
+            .join('');
+        
+            return capitalizeFirst;
+        }
+
     const registerClickedHandler = () => {
-
-
+        
         const user = {
             email: inputs.email.value,
             password: inputs.password.value,
@@ -103,7 +116,7 @@ function Authentification(props) {
         fire.auth()
             .createUserWithEmailAndPassword(user.email, user.password)
             .then(response => {
-                axios.post('/users.json', pseudo)
+                axios.post('/users.json', toCapitalizeFirst(pseudo))
                     .then(response => {
                         console.log(response);
                     })
@@ -126,7 +139,7 @@ function Authentification(props) {
         fire.auth().onAuthStateChanged( (user) => {
             if (user) {
                 user.updateProfile({ 
-                displayName: '@' + inputs.pseudo.value,
+                displayName: '@' + toCapitalizeFirst(inputs.pseudo.value),
                 // photoURL: "https://example.com/jane-q-user/profile.jpg"
                 })
                 .then(response => {
@@ -192,7 +205,7 @@ function Authentification(props) {
         fire.auth().onAuthStateChanged( (user) => {
             if (user) {
                 user.updateProfile({ 
-                displayName: '@' + inputs.pseudo.value,
+                displayName: '@' + toCapitalizeFirst(inputs.pseudo.value),
                 // photoURL: "https://example.com/jane-q-user/profile.jpg"
                 })
                 .then(response => {
@@ -237,7 +250,7 @@ function Authentification(props) {
                     changed={(e) => inputChangedHandler(e, formElement.id)} />
             ))}
             <div className={classes.buttons}>
-                    <button type='submit' onClick={registerClickedHandler} disabled={!valid} className={classes.button}>Inscription</button>
+                    <button onClick={registerClickedHandler} disabled={!valid} className={classes.button}>Inscription</button>
                     <button onClick={loginClickedHandler} disabled={!valid} className={classes.button}>Connexion</button>  
                     <button className={classes.buttonGoogle} disabled={!inputs.pseudo.value} onClick={loginGoogleClickedHandler}>Se connecter avec Google<LogoGoogle/></button>
 

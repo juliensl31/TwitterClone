@@ -79,21 +79,21 @@ function ManageTweet(props) {
         document.title = "Mon compte";
     });
 
-        //ComponentDidMount
-        useEffect(() => {
-            authListener();
-        },[]);
-    
-        const authListener = () => {
-            fire.auth().onAuthStateChanged(user => {
-            if(user) {
-                setUser(user);
-            }
-            else {
-                setUser('')
-            }
-            });
-        } ;
+    //ComponentDidMount
+    useEffect(() => {
+        authListener();
+    },[]);
+
+    const authListener = () => {
+        fire.auth().onAuthStateChanged(user => {
+        if(user) {
+            setUser(user);
+        }
+        else {
+            setUser('')
+        }
+        });
+    } ;
 
     // Fonctions
     const inputChangedHandler = (event, id) => {
@@ -178,7 +178,8 @@ function ManageTweet(props) {
             hashtag: inputs.hashtag.value,
             date: Date.now(),
             slug: slug,
-            auteur: user.displayName
+            auteur: user.displayName,
+            user_id: user.uid
         };
 
         fire.auth().currentUser.getIdToken()

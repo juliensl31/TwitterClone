@@ -17,6 +17,9 @@ function Profile(props) {
     useEffect(() => {
         authListener();
        
+         return () => {
+            authListener();
+          };
     },[]);
 
     const authListener = () => {
@@ -28,9 +31,6 @@ function Profile(props) {
             setUser('')
         }
         });
-         return () => {
-            authListener();
-          };
     } ;
 
     // Fonction
