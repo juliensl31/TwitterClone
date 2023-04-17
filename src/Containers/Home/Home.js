@@ -1,9 +1,6 @@
 // Librairie
 import axios from '../../config/axios-firebase';
-// import routes from '../../config/routes';
 import React, { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
-// import classes from './Home.module.css';
 
 // Composant
 import DisplayedTweets from '../../Components/DisplayedTweets/DisplayedTweets';

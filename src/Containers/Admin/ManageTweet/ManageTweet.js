@@ -19,9 +19,9 @@ function ManageTweet(props) {
             elementConfig: {
                 type: 'text'
             },
-            value: props.location.state && props.location.state.tweet ? props.location.state.tweet.titre : '',
+            value: '',
             label: 'Titre',
-            valid: props.location.state && props.location.state.tweet ? true : false,
+            valid: false,
             validation: {
                 required: true,
                 minLength: 5,
@@ -30,26 +30,12 @@ function ManageTweet(props) {
             touched: false,
             errorMessage: 'Le titre doit faire entre 5 et 85 caractères.'
         },
-        accroche: {
-            elementType: 'textarea',
-            elementConfig: {},
-            value: props.location.state && props.location.state.tweet ? props.location.state.tweet.accroche : '',
-            label: "Accroche",
-            valid: props.location.state && props.location.state.tweet ? true : false,
-            validation: {
-                required: true,
-                minLength: 10,
-                maxLength: 140
-            },
-            touched: false,
-            errorMessage: "L'accroche ne doit pas être vide et doit être comprise entre 10 et 140 caractères."
-        },
         contenu: {
             elementType: 'textarea',
             elementConfig: {},
-            value: props.location.state && props.location.state.tweet ? props.location.state.tweet.contenu : '',
+            value: '',
             label: "Contenu",
-            valid: props.location.state && props.location.state.tweet ? true : false,
+            valid: false,
             validation: {
                 required: true
             },
@@ -59,9 +45,9 @@ function ManageTweet(props) {
         hashtag: {
             elementType: 'textarea',
             elementConfig: {},
-            value: props.location.state && props.location.state.tweet ? props.location.state.tweet.hashtag : '',
+            value: '',
             label: "Hashtag",
-            valid: props.location.state && props.location.state.tweet ? true : false,
+            valid: false,
             validation: {
                 required: true
             },
@@ -72,7 +58,7 @@ function ManageTweet(props) {
 
     //State
     const [user, setUser] = useState(' ');
-    const [valid, setValid] = useState(props.location.state && props.location.state.tweet ? true : false);
+    const [valid, setValid] = useState(false);
 
     // ComponentDidUpdate
     useEffect(() => {
@@ -174,7 +160,6 @@ function ManageTweet(props) {
         const tweet = {
             titre: inputs.titre.value,
             contenu: inputs.contenu.value,
-            accroche: inputs.accroche.value,
             hashtag: inputs.hashtag.value,
             date: Date.now(),
             slug: slug,
@@ -184,30 +169,16 @@ function ManageTweet(props) {
 
         fire.auth().currentUser.getIdToken()
             .then(token => {
-
-                if(props.location.state && props.location.state.tweet) {
-                    axios.put('/tweets/' + props.location.state.tweet.id + '.json?auth=' + token, tweet)
+                axios.post('/tweets.json?auth=' + token, tweet)
                     .then(response => {
                         console.log(response);
-                        toast('tweet modifié avec succès');
-                        props.history.replace(routes.TWEETS + '/' + tweet.slug);
+                        toast('tweet ajouté avec succès');
+                        props.history.replace(routes.TWEETS);
                     })
                     .catch(error => {
                         console.log(error);
                     });
-                }
-                else {
-                    axios.post('/tweets.json?auth=' + token, tweet)
-                        .then(response => {
-                            console.log(response);
-                            toast('tweet ajouté avec succès');
-                            props.history.replace(routes.TWEETS);
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
-                }
-            })
+                })
             .catch(error => {
                 console.log(error);
             });
@@ -238,18 +209,14 @@ function ManageTweet(props) {
                     changed={(e) => inputChangedHandler(e, formElement.id)} />
             ))}
             <div className={classes.submit}>
-                <input type="submit" value={props.location.state && props.location.state.tweet ? 'Modifier un tweet' : 'Ajouter un tweet'} disabled={!valid} />
+                <input type="submit" value="Ajouter un tweet" disabled={!valid} />
             </div>
         </form>
     );
 
     return (
         <div className="container">
-            {props.location.state && props.location.state.tweet ?
-                <h1>Modifier</h1>
-                :
-                <h1>Ajouter</h1>
-            }
+            <h1>Ajouter</h1>
             {form}
         </div>
     );

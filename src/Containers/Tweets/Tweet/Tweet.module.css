@@ -1,6 +1,13 @@
+.Tweet {
+    width: 500px;
+    padding: 15px;
+    background-color: #0018337a;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
 .lead {
     color: rgba(0, 0, 0, .5);
-    margin-bottom: 15px;
 }
 
 .section {
@@ -8,35 +15,21 @@
     padding: 30px;
 }
 
-
-.author {
-    background-color: #57960f;
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid silver;
     padding: 15px;
     border-radius: 4px;
 }
 
-.author span {
-    margin-left: 30px;
+.footer span {
+    margin-left: 10px;
     font-size: .9rem;
 }
 
-.button {
-    display: block;
-    margin-top: 15px;
-    text-align: right;
-}
-
-.button button {
-    border: 0;
-    padding: 10px 15px;
-    background-color: #fb743e;
-    color: white;
-    margin: 5px;
-    border-radius: 4px;
+.icons svg {
     cursor: pointer;
-}
-
-.button button:focus,
-.button button:hover {
-    background-color: #d3450d;
+    color: #fb743e;
 }
