@@ -33,3 +33,9 @@
     cursor: pointer;
     color: #fb743e;
 }
+
+.ShareSocial {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
