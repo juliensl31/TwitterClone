@@ -9,7 +9,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 
 
-import ShareModal from '../../UI/ShareModal/ShareModal';
+import ShareModal from '../../UI/Modal/Share/ShareModal';
 
 function DisplayedTweet(props) {
 
@@ -45,7 +45,7 @@ function DisplayedTweet(props) {
                         <ShareSocial
                             className={classes.ShareSocial}
                             url={"http://localhost:3000/TwitterClone/tweets/" + props.tweet.slug}
-                            socialTypes={['facebook', 'twitter', 'whatsapp', 'reddit', 'linkedin', 'telegram', 'email']}
+                            socialTypes={['facebook', 'twitter', 'whatsapp', 'reddit', 'linkedin', 'telegram']}
                             onSocialButtonClicked={data => console.log(data)}
                         />
                     </ShareModal>
