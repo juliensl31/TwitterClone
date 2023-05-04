@@ -112,7 +112,7 @@ function Authentification(props) {
             email: inputs.email.value,
             password: inputs.password.value,
         };
-
+        
         fire.auth()
             .createUserWithEmailAndPassword(user.email, user.password)
             .then(response => {
@@ -161,8 +161,7 @@ function Authentification(props) {
             password: inputs.password.value
         };
 
-        fire
-            .auth()
+        fire.auth()
             .signInWithEmailAndPassword(user.email, user.password)
             .then(response => {
                 toast('Vous revoici !');
@@ -184,11 +183,9 @@ function Authentification(props) {
 
     const loginGoogleClickedHandler = () => {
 
-        fire
-        .auth()
-        .signInWithPopup(provider)
+        fire.auth().signInWithPopup(provider)
         .then(response => {
-            axios.post('/users.json', pseudo)
+            axios.post('/users.json', toCapitalizeFirst(pseudo))
                 .then(response => {
                     console.log(response);
                 })

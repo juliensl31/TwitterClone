@@ -23,7 +23,7 @@ function Tweet(props) {
     useEffect(() => {
         axios.get('/tweets.json?orderBy="slug"&equalTo="'+ props.match.params.slug +'"')
         .then(response =>{
-
+    
             if(Object.keys(response.data).length === 0) {
                 console.log(response);
                 toast.error("Cet tweet n'existe pas !");
@@ -40,9 +40,9 @@ function Tweet(props) {
         .catch(error => {
             console.log(error);
         });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    
+    }, [props.match.params.slug]); // Si le slug change, le useEffect se relance
+    
 
     useEffect(() => {
         document.title = tweet.titre;

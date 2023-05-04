@@ -12,26 +12,27 @@ function Profile(props) {
 
     //State
     const [user, setUser] = useState(' ');
+    const currentUser = user.displayName;
 
     //ComponentDidMount
     useEffect(() => {
-        authListener();
-       
-         return () => {
-            authListener();
-          };
+    const unsubscribe = authListener();
+    
+    // Fonction de nettoyage qui sera déclenchée lorsque le composant se démontera de l'écran ou avant que l'effet ne se déclenche à nouveau.
+    return () => {
+        unsubscribe();
+    };
     },[]);
 
     const authListener = () => {
-        fire.auth().onAuthStateChanged(user => {
+    return fire.auth().onAuthStateChanged(user => {
         if(user) {
-            setUser(user);
+        setUser(user);
+        } else {
+        setUser('');
         }
-        else {
-            setUser('')
-        }
-        });
-    } ;
+    });
+    };
 
     // Fonction
     const logoutClickedHandler = () => {
@@ -43,7 +44,7 @@ function Profile(props) {
     return (
         <div className={classes.Profile}>
             <h1>Compte</h1>
-            <p>{user.displayName}</p>
+            <p>{currentUser}</p>
             <div className={classes.items}>
                     <Link to={routes.ACCOUNTS}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
