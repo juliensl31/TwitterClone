@@ -12,6 +12,7 @@ function Navigation(props) {
     return (
         <ul className={classes.Navigation}>
             <NavigationItem exact to={routes.HOME}>Home</NavigationItem>
+            <NavigationItem exact to={routes.ACCOUNTS}>Comptes</NavigationItem>
             <NavigationItem to={routes.CONTACT}>Contact</NavigationItem>
         </ul>
     );

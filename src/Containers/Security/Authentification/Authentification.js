@@ -104,19 +104,24 @@ function Authentification(props) {
             .join('');
         
             return capitalizeFirst;
-        }
+        };
+
+    const accountInformation = {
+        pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
+        follow: false
+    };
 
     const registerClickedHandler = () => {
         
         const user = {
             email: inputs.email.value,
-            password: inputs.password.value,
+            password: inputs.password.value
         };
         
         fire.auth()
             .createUserWithEmailAndPassword(user.email, user.password)
             .then(response => {
-                axios.post('/users.json', toCapitalizeFirst(pseudo))
+                axios.post('/users.json', accountInformation)
                     .then(response => {
                         console.log(response);
                     })
@@ -185,7 +190,7 @@ function Authentification(props) {
 
         fire.auth().signInWithPopup(provider)
         .then(response => {
-            axios.post('/users.json', toCapitalizeFirst(pseudo))
+            axios.post('/users.json', pseudo)
                 .then(response => {
                     console.log(response);
                 })

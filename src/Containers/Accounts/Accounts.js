@@ -1,35 +1,18 @@
-import React, { useEffect, useState } from "react";
-import fire from "../../config/firebase";
+import React from "react";
+import Account from "./Account/Account";
+import classes from './Accounts.module.css';
 
 function Accounts() {
 
-    //State
-    // eslint-disable-next-line
-    const [user, setUser] = useState(' ');
-
-    //ComponentDidMount
-    useEffect(() => {
-        authListener();
-    },[]);
-
-    const authListener = () => {
-        fire.auth().onAuthStateChanged(user => {
-        if(user) {
-            setUser(user);
-        }
-        else {
-            setUser('')
-        }
-        });
-    } ;
-
     return (
-        <>
-            <h1>Mes Abonnements</h1>
-            <p>
-                
-            </p>
-        </>
+        <div > 
+            <h1>Comptes</h1>
+            <p>Voici la liste des comptes</p>
+            <div className={classes.Accounts}>
+              <Account/>  
+            </div>
+            
+        </div>
     );
 }
 

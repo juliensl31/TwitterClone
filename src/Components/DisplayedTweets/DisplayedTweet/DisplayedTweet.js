@@ -26,7 +26,7 @@ function DisplayedTweet(props) {
             <Link className={classes.link} to={routes.TWEETS + '/' + props.tweet.slug}>
                 <h2>{props.tweet.titre}</h2>
                 <p>{substr + " ..."}</p>
-                <small className={classes.hashtag}>{props.tweet.hashtag}</small>
+                <h6 className={classes.hashtag}>{props.tweet.hashtag}</h6>
             </Link>    
             <div className={classes.footer}>
                 <div className={classes.footerLeft}>
