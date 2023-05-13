@@ -34,11 +34,16 @@ function Account(props) {
 
     return (
         <>
-        {user.map(user => ( 
+        
+            {user.map(user => ( 
         <div className={classes.Account} key={user.id}>
-            {!user.follow === true ? <p>{user.pseudo}</p> : null}
+           
+            <p>{user.pseudo}</p> 
+            
         </div>
-        ))}
+        ))}    
+       
+        
         </>
     );
 };

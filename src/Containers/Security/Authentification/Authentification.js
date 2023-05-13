@@ -66,8 +66,7 @@ function Authentification(props) {
 
     const [valid, setValid] = useState(false);
     const [emailError, setEmailError] = useState(false);
-    const [loginError, setLoginError] = useState(false);    
-    const pseudo = {pseudo: '@' + inputs.pseudo.value}
+    const [loginError, setLoginError] = useState(false);
     // eslint-disable-next-line
     let displayName;
     // let photoURL;  
@@ -106,28 +105,17 @@ function Authentification(props) {
             return capitalizeFirst;
         };
 
-    const accountInformation = {
-        pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
-        follow: false
-    };
-
     const registerClickedHandler = () => {
         
         const user = {
             email: inputs.email.value,
             password: inputs.password.value
         };
+
         
         fire.auth()
             .createUserWithEmailAndPassword(user.email, user.password)
             .then(response => {
-                axios.post('/users.json', accountInformation)
-                    .then(response => {
-                        console.log(response);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
                 toast('Bienvenue');
                 props.history.push(routes.HOME);
             })
@@ -141,13 +129,25 @@ function Authentification(props) {
                 }
             });
 
-        fire.auth().onAuthStateChanged( (user) => {
+           fire.auth().onAuthStateChanged( (user) => {
             if (user) {
                 user.updateProfile({ 
                 displayName: '@' + toCapitalizeFirst(inputs.pseudo.value),
                 // photoURL: "https://example.com/jane-q-user/profile.jpg"
                 })
                 .then(response => {
+                    const accountInformation = {
+                        pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
+                        follow: false,
+                        user_id: user.uid
+                    };
+                    axios.post('/users.json', accountInformation)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
                     displayName = user.displayName;
                     // photoURL = user.photoURL;
                 })
@@ -183,20 +183,12 @@ function Authentification(props) {
                         break;
                 }
             });
-        
-    }
+        }
 
     const loginGoogleClickedHandler = () => {
 
         fire.auth().signInWithPopup(provider)
         .then(response => {
-            axios.post('/users.json', pseudo)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
             toast('Bienvenue');
             props.history.push(routes.HOME);
         })
@@ -211,6 +203,18 @@ function Authentification(props) {
                 // photoURL: "https://example.com/jane-q-user/profile.jpg"
                 })
                 .then(response => {
+                const accountInformation = {
+                    pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
+                    follow: false,
+                    user_id: user.uid
+                };
+                axios.post('/users.json', accountInformation)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
                     displayName = user.displayName;
                     // photoURL = user.photoURL;
                 })

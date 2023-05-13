@@ -30,7 +30,7 @@ function DisplayedTweet(props) {
             </Link>    
             <div className={classes.footer}>
                 <div className={classes.footerLeft}>
-                    <b>{props.tweet.auteur}</b>
+                    Publié par : <b>{props.tweet.auteur}</b>
                     <small>{date}</small>  
                 </div>
                 <div className={classes.icons}>

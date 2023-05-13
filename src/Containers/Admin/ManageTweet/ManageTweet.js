@@ -155,7 +155,6 @@ function ManageTweet(props) {
 
         
         const slug = generateSlug(inputs.titre.value);
-        // const auteur = strRandom();
 
         const tweet = {
             titre: inputs.titre.value,
