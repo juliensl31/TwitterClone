@@ -8,7 +8,7 @@ import DisplayedTweets from '../../Components/DisplayedTweets/DisplayedTweets';
 function Home() {
 
        // State
-       const [tweets, sets] = useState([]);
+       const [tweets, setTweets] = useState([]);
 
        // ComponentDidMount
        useEffect(() => {
@@ -27,7 +27,7 @@ function Home() {
                // Chronologie
                tweetsArray.reverse();
    
-               sets(tweetsArray);
+               setTweets(tweetsArray);
            })
            .catch(error => {
                console.log(error);
@@ -40,7 +40,7 @@ function Home() {
    
     return (
         <div className='container'> 
-            <h1>Actu</h1>
+            <h1>Explorer</h1>
             <DisplayedTweets tweets={tweets} />
         </div>
     );
