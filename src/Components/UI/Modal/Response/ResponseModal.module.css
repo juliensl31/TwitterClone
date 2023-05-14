@@ -48,29 +48,32 @@ svg {
   padding: 20px;
 }
 
-.textarea {
+.Ajouter textarea {
   width: 100%;
-  height: 100px;
-  border-radius: 8px;
+  height: 120px;
   border: 1px solid silver;
-  padding: 10px;
-  margin-bottom: 20px;
+  border-radius: 8px;
 }
 
-.button {
-  width: 100%;
-  height: 40px;
-  border-radius: 8px;
-  border: 1px solid silver;
+.submit input {
+  padding: 10px 15px;
   background-color: #fb743e;
   color: white;
-  font-weight: 600;
+  width: 100%;
+  margin: 5px;
+  border: 1px solid silver;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-.button:focus,
-.button:hover {
-    background-color: #d3450d;
+.submit input:disabled {
+  opacity: .3;
+  cursor: not-allowed;
+}
+
+.submit input:focus,
+.submit input:hover {
+  background-color: #d3450d;
 }
  
   

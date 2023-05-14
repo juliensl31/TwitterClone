@@ -40,21 +40,18 @@ function DisplayedAccount(props) {
     return (
         <div className={classes.DisplayedAccount}>
             <Link className={classes.link} to={routes.ACCOUNTS + '/' + props.account.pseudo}>
-                <h2>{props.account.pseudo}</h2>
-            </Link>    
+                <div>
+                    <h2>{props.account.pseudo}</h2>
+                </div>
+            </Link>
             <div className={classes.footer}>
-                
-                <Follow account={props.account} />
                 {tweets.length > 0 ?
-                    
                     <div><b>{tweets.filter(tweet => tweet.auteur === props.account.pseudo).length}</b> Tweets</div>
-                    
-                : null}
-                
-                
+                : 
+                null}
+                <Follow account={props.account} />
             </div>
         </div>
-
     );
 }
 DisplayedAccount.propTypes = {

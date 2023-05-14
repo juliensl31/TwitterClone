@@ -90,12 +90,10 @@ function Tweet(props) {
                         </span>
                     </div>
                     <div className={classes.icons}>
+                        {tweet.auteur !== currentUser ? <Follow/> : null}
 
-                        <Follow />
+                        <ResponseModal/>
 
-                        <ResponseModal>
-
-                        </ResponseModal>
                         <ShareModal>
                             <ShareSocial
                                 className={classes.ShareSocial}

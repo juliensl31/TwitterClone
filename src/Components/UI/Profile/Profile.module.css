@@ -1,11 +1,13 @@
 .Profile {
     width: 400px;
-    background-color: #55525262;
+    background-color: #1f1e1e62;
     color: white;
     padding: 30px;
     margin-top: 50px;
     border-radius: 5px;
     text-align: center;
+    border: 1px solid silver;
+    border-radius: 8px;
 }
 
 .Profile h1 {

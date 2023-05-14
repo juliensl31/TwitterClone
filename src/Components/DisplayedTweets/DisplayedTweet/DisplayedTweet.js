@@ -1,5 +1,5 @@
 // Librairies
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../../config/routes';
 import classes from './DisplayedTweet.module.css';
@@ -12,13 +12,32 @@ import 'moment/locale/fr';
 import ShareModal from '../../UI/Modal/Share/ShareModal';
 import Follow from '../../Follow/Follow';
 import ResponseModal from '../../UI/Modal/Response/ResponseModal';
+import fire from '../../../config/firebase';
 
 function DisplayedTweet(props) {
 
-    // Fonction 
+    //State
+  const [user, setUser] = useState(' ');
+
+    //ComponentDidMount
+    useEffect(() => {
+        authListener();
+    },[]);
+
+    const authListener = () => {
+        fire.auth().onAuthStateChanged(user => {
+        if(user) {
+            setUser(user);
+        }
+        else {
+            setUser('')
+        }
+        });
+    } ;
+
     // Raccourcir affichage post
     const substr = props.tweet.contenu.substr(0, 150);
-
+    
     // Variable
     moment.locale('fr');
     let date = moment.unix(props.tweet.date / 1000).startOf('hour').fromNow();
@@ -36,10 +55,10 @@ function DisplayedTweet(props) {
                     <small>{date}</small>  
                 </div>
                 <div className={classes.icons}>
-                    <Follow />
+                    {props.tweet.auteur !== user.displayName ? <Follow/> : null}
 
                     <ResponseModal>
-
+                        {props.children}
                     </ResponseModal>
 
                     <ShareModal>

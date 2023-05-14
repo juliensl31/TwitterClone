@@ -17,7 +17,9 @@
     background-color: #fb743e;
     color: white;
     margin: 5px;
-    border-radius: 4px;
+    width: 100%;
+    border: 1px solid silver;
+    border-radius: 8px;
     cursor: pointer;
 }
 
