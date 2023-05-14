@@ -22,10 +22,13 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    border-radius: 30px;
+    border: 1px solid silver;
+    border-radius: 8px;
     width: 100%;
-    height: 50px;
+    height: 40px;
     justify-content: center;
+    font-weight: 600;
+      
 }
 .button:focus,
 .button:hover {

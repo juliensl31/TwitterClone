@@ -26,7 +26,10 @@ function ResponseModal(props) {
                 <h3>Répondre ...</h3>
                 <button className={classes.closeButton} onClick={hideResponseModalHandler}>X</button>    
             </div>
-            {props.children}
+            <div className={classes.body}>
+              <textarea className={classes.textarea} placeholder="Quoi de neuf ?"></textarea>
+              <button className={classes.button}>Répondre</button>
+            </div>
           </div>
         </div>
       )}
