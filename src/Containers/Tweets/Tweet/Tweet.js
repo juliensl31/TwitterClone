@@ -12,6 +12,7 @@ import { ShareSocial } from 'react-share-social';
 import ShareModal from '../../../Components/UI/Modal/Share/ShareModal';
 import ResponseModal from '../../../Components/UI/Modal/Response/ResponseModal';
 import Follow from '../../../Components/Follow/Follow';
+import GetResponse from '../../../Components/UI/Modal/Response/GetResponse/GetResponse';
 
 function Tweet(props) {
 
@@ -110,6 +111,10 @@ function Tweet(props) {
                             </> : null}
                     </div>
                 </div>
+            </div>
+            <div className={classes.response}>
+                <h3>Réponses</h3>
+                <GetResponse/>
             </div>
 
         </>

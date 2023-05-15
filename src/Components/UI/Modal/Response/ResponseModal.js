@@ -7,6 +7,7 @@ import { checkValidity } from '../../../../shared/utility';
 // Composant
 import Input from '../../../UI/Input/Input';
 import { toast } from 'react-toastify';
+import GetResponse from './GetResponse/GetResponse';
 
 
 function ResponseModal(props) {
@@ -108,26 +109,6 @@ const fetchTweet = () => {
       });
 };
 
-useEffect (() => {
-  axios.get('/responses.json')
-      .then(response => {
-        const responses = [];
-        for (let key in response.data) {
-          responses.push({
-            id: key,
-            ...response.data[key]
-          });
-        }
-        responses.reverse();
-        // responses.filter(response => response.tweet_id === tweets[0].id);
-        setResponses(responses);
-
-      })
-        .catch(error => {
-        console.log(error);
-      });
-});
-
 const formHandler = event => {
   event.preventDefault();
 
@@ -199,7 +180,7 @@ const formHandler = event => {
                 <button className={classes.closeButton} onClick={hideResponseModalHandler}>X</button>    
             </div>
             {user ? form : <p>Vous devez être connecté pour répondre à un tweet.</p>}
-            
+            <GetResponse />
 
          </div>
         </div>
