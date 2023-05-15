@@ -1,59 +1,49 @@
-// Librairies
-import React, { useState, useEffect } from 'react';
+// Libraries
+import React, { useState, useEffect } from 'react'; 
 import axios from '../../config/axios-firebase';
-
-// Composant
-import DisplayedTweets from '../../Components/DisplayedTweets/DisplayedTweets';
 import fire from '../../config/firebase';
+
+// Components
+import DisplayedTweets from '../../Components/DisplayedTweets/DisplayedTweets';
 
 function Tweets() {
   
     // State
     const [tweets, setTweets] = useState([]);
-    // eslint-disable-next-line
-    const [user, setUser] = useState('');
 
-    //ComponentDidMount
+    // ComponentDidMount
     useEffect(() => {
-      authListener();
-    },[]);
-  
-    const authListener = () => {
-      fire.auth().onAuthStateChanged(user => {
-        if(user) {
-          setUser(user);
+      const authListener = () => {
+        fire.auth().onAuthStateChanged(user => {
+          if(user) {
             axios.get('/tweets.json')
-              .then(response =>{
-                  let tweetsArray = [];
+              .then(response => {
+                let tweetsArray = [];
 
-                  for (let key in response.data) {
-                      tweetsArray.push({
-                          ...response.data[key],
-                          id: key
-                      });
-                  }
-
-                  // Chronologie
-                  tweetsArray.reverse();
-                        
-                  tweetsArray = tweetsArray.filter(tweet => tweet.auteur === user.displayName);
-
-                  setTweets(tweetsArray);
+                for (let key in response.data) {
+                    tweetsArray.push({
+                        ...response.data[key],
+                        id: key
+                    });
+                }
+                                    
+                tweetsArray = tweetsArray.filter(tweet => tweet.auteur === user.displayName);
+                // Chronologie
+                setTweets(tweetsArray.reverse());
               })
               .catch(error => {
                   console.log(error);
               });
-        }
-        else {
-          setUser('')
-          
-        }
-      });
-    } ;
+          }
+        });
+      }
 
+      authListener();
+    },[]);
+  
     useEffect(() => {
         document.title = 'Mes tweets';
-    });
+    }, []);
 
     return (
         <>

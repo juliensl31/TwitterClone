@@ -12,17 +12,12 @@ function Profile(props) {
 
     //State
     const [user, setUser] = useState(' ');
-    const currentUser = user.displayName;
+    // const currentUser = user.displayName;
 
-    //ComponentDidMount
-    useEffect(() => {
-    const unsubscribe = authListener();
-    
-    // Fonction de nettoyage qui sera déclenchée lorsque le composant se démontera de l'écran ou avant que l'effet ne se déclenche à nouveau.
-    return () => {
-        unsubscribe();
-    };
-    },[]);
+  //ComponentDidMount
+  useEffect(() => {
+    return authListener();
+  },[]);
 
     const authListener = () => {
     return fire.auth().onAuthStateChanged(user => {
@@ -44,7 +39,7 @@ function Profile(props) {
     return (
         <div className={classes.Profile}>
             <h1>Compte</h1>
-            <p>{currentUser}</p>
+            <p>{user.displayName}</p>
             <div className={classes.items}>
                     <Link to={routes.ACCOUNTS}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">

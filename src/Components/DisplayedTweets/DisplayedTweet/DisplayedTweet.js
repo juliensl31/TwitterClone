@@ -21,7 +21,7 @@ function DisplayedTweet(props) {
 
     //ComponentDidMount
     useEffect(() => {
-        authListener();
+       return authListener();
     },[]);
 
     const authListener = () => {
@@ -51,7 +51,7 @@ function DisplayedTweet(props) {
             </Link>    
             <div className={classes.footer}>
                 <div className={classes.footerLeft}>
-                    Publié par : <b>{props.tweet.auteur}</b>
+                Publié par : <Link to={routes.ACCOUNTS + '/' + props.tweet.auteur}><b>{props.tweet.auteur}</b></Link> 
                     <small>{date}</small>  
                 </div>
                 <div className={classes.icons}>
