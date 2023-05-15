@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../../../../config/axios-firebase';
+import classes from './GetResponse.module.css';
 import moment from 'moment';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
+import routes from '../../../../../config/routes';
 
 function GetResponse() {
   const [responses, setResponses] = useState([]);
@@ -27,12 +30,16 @@ function GetResponse() {
 
 
   return (
-    <div>
+    <div className={classes.GetResponse}>
         {responses.map(response => (
             <div key={response.id}>
-                <p>{response.contenu}</p>
-                <p>{response.auteur}</p>
-                <p>{moment(response.date).fromNow()}</p>
+                <p className={classes.content}>{response.contenu}</p>
+                <div >
+                    <div className={classes.footer}>
+                       <div>Publié par : <Link to={routes.ACCOUNTS + '/' + response.auteur}><b>{response.auteur}</b></Link></div> 
+                        <small>{moment(response.date).fromNow()}</small>   
+                    </div>
+                </div>
             </div>
         ))}
      
