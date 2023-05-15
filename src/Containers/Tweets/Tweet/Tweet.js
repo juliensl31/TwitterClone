@@ -12,13 +12,13 @@ import { ShareSocial } from 'react-share-social';
 import ShareModal from '../../../Components/UI/Modal/Share/ShareModal';
 import ResponseModal from '../../../Components/UI/Modal/Response/ResponseModal';
 import Follow from '../../../Components/Follow/Follow';
-import GetResponse from '../../../Components/UI/Modal/Response/GetResponse/GetResponse';
 
 function Tweet(props) {
 
     // State
     const [tweet, setTweet] = useState([]);
     const currentUser = props.user.displayName;
+    const [responses, setResponses] = useState([]);
 
     // ComponentDidMount
     useEffect(() => {
@@ -43,6 +43,26 @@ function Tweet(props) {
             });
 
     }, [props.match.params.slug]); // Si le slug change, le useEffect se relance
+
+    useEffect(() => {
+        axios.get('/responses.json')
+            .then(response => {
+                
+            const fetchedResponses = [];
+
+            for (let key in response.data) {
+                fetchedResponses.push({
+                ...response.data[key],
+                id: key,
+                });
+            }
+            fetchedResponses.reverse();
+            setResponses(fetchedResponses);
+            })
+            .catch(error => {
+            console.log(error);
+            });
+        }, []);
 
     // ComponentDidUpdate
     useEffect(() => {
@@ -114,7 +134,23 @@ function Tweet(props) {
             </div>
             <div className={classes.response}>
                 <h3>Réponses</h3>
-                <GetResponse/>
+                
+                {responses.map(response => (
+                    <div key={response.id}>
+                        {tweet.id === response.tweet_id ?
+                            <div className={classes.GetResponse}>
+                                <p className={classes.content}>{response.contenu}</p>
+                                <div >
+                                    <div className={classes.footer}>
+                                        <div>Publié par : <Link to={routes.ACCOUNTS + '/' + response.auteur}><b>{response.auteur}</b></Link></div>
+                                        <small>{moment(response.date).fromNow()}</small>
+                                        {/* <ResponseModal/> */}
+                                    </div>
+                                </div>
+                            </div>
+                            : null}
+                    </div>
+                ))}
             </div>
 
         </>

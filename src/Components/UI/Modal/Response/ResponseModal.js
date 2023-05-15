@@ -7,7 +7,6 @@ import { checkValidity } from '../../../../shared/utility';
 // Composant
 import Input from '../../../UI/Input/Input';
 import { toast } from 'react-toastify';
-import GetResponse from './GetResponse/GetResponse';
 
 
 function ResponseModal(props) {
@@ -17,8 +16,6 @@ function ResponseModal(props) {
   const [valid, setValid] = useState(false);
   const [user, setUser] = useState(' ');
   const [tweets, setTweets] = useState([]);
-  // eslint-disable-next-line
-  const [responses, setResponses] = useState([]);
 
   const [inputs, setInputs] = useState({
     contenu: {
@@ -165,6 +162,7 @@ const formHandler = event => {
     </form>
 );
 
+
   return (
     
     <>
@@ -180,7 +178,6 @@ const formHandler = event => {
                 <button className={classes.closeButton} onClick={hideResponseModalHandler}>X</button>    
             </div>
             {user ? form : <p>Vous devez être connecté pour répondre à un tweet.</p>}
-            <GetResponse />
 
          </div>
         </div>
