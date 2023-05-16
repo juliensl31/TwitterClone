@@ -11,7 +11,6 @@ import 'moment/locale/fr';
 
 import ShareModal from '../../UI/Modal/Share/ShareModal';
 import Follow from '../../Follow/Follow';
-import ResponseModal from '../../UI/Modal/Response/ResponseModal';
 import fire from '../../../config/firebase';
 
 function DisplayedTweet(props) {

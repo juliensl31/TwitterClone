@@ -7,6 +7,8 @@ import { checkValidity } from '../../../../shared/utility';
 // Composant
 import Input from '../../../UI/Input/Input';
 import { toast } from 'react-toastify';
+import { withRouter } from 'react-router-dom';
+import routes from '../../../../config/routes';
 
 
 function ResponseModal(props) {
@@ -15,7 +17,8 @@ function ResponseModal(props) {
   const [showResponseModal, setShowResponseModal] = useState(false);
   const [valid, setValid] = useState(false);
   const [user, setUser] = useState(' ');
-  const [tweets, setTweets] = useState([]);
+  const [tweets, setTweets] = useState(' ');
+
 
   const [inputs, setInputs] = useState({
     contenu: {
@@ -45,12 +48,6 @@ function ResponseModal(props) {
   useEffect(() => {
     document.title = "Mon compte";
   });
-
-  //ComponentDidMount
-  useEffect(() => {
-    fetchTweet();
-  }, []);
-
 
 
   useEffect(() => {
@@ -89,22 +86,24 @@ function ResponseModal(props) {
     setValid(formIsValid);
 };
 
-const fetchTweet = () => {
-  axios.get('/tweets/.json')
+useEffect(() => {
+  axios.get('/tweets.json?orderBy="id"')
       .then(response => {
-        const tweets = [];
-        for (let key in response.data) {
-          tweets.push({
-            id: key,
-            ...response.data[key]
+      
+      const fetchedTweets = [];
+
+      for (let key in response.data) {
+          fetchedTweets.push({
+          ...response.data[key],
+          id: key,
           });
-        }
-        setTweets(tweets);
+      }
+      setTweets(fetchedTweets);
       })
-        .catch(error => {
-        console.log(error);
+      .catch(error => {
+          console.log(error);
       });
-};
+}, []);
 
 const formHandler = event => {
   event.preventDefault();
@@ -113,7 +112,8 @@ const formHandler = event => {
       contenu: inputs.contenu.value,
       date: Date.now(),
       auteur: user.displayName,
-      tweet_id: tweets[0].id
+      tweet_id: props.match.params.slug
+      
   };
 
   fire.auth().currentUser.getIdToken()
@@ -122,7 +122,9 @@ const formHandler = event => {
               .then(response => {
                   console.log(response);
                   toast('réponse ajouté avec succès');
-              })
+                  hideResponseModalHandler();
+                  props.history.replace(routes.TWEETS + '/' + props.match.params.slug);  
+                })
               .catch(error => {
                   console.log(error);
               });
@@ -178,7 +180,6 @@ const formHandler = event => {
                 <button className={classes.closeButton} onClick={hideResponseModalHandler}>X</button>    
             </div>
             {user ? form : <p>Vous devez être connecté pour répondre à un tweet.</p>}
-
          </div>
         </div>
       )}
@@ -186,4 +187,4 @@ const formHandler = event => {
   );
 }
 
-export default ResponseModal;
+export default withRouter(ResponseModal) ;
