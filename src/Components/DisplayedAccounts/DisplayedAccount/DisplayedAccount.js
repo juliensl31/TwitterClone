@@ -29,6 +29,7 @@ function DisplayedAccount(props) {
             // Chronologie
             tweetsArray.reverse();
 
+            // Mise à jour du state
             setTweets(tweetsArray);        
 
         })

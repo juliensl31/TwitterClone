@@ -26,6 +26,7 @@ function App() {
     authListener();
   },[]);
 
+  // Authentification
   const authListener = () => {
     fire.auth().onAuthStateChanged(user => {
       if(user) {

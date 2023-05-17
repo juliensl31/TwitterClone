@@ -1,3 +1,4 @@
+// Librairies
 import React, { useEffect, useState } from "react";
 import classes from './Accounts.module.css';
 import axios from "../../config/axios-firebase";
@@ -5,11 +6,14 @@ import DisplayedAccounts from "../../Components/DisplayedAccounts/DisplayedAccou
 
 function Accounts() {
 
+    // State
     const [accounts, setAccounts] = useState([]);
 
+    // Récupérer les comptes
     useEffect(() => {
         axios.get('/users.json')
         .then(response => {
+            // Mettre les données dans un tableau
             let newAccounts = [];
             for (let key in response.data) {
                 newAccounts.push({
@@ -17,6 +21,7 @@ function Accounts() {
                     id: key
                 });
             }
+            // Mettre à jour le state
             setAccounts(newAccounts);
         })
         .catch(error => {
@@ -24,6 +29,7 @@ function Accounts() {
         });
     }, []);
 
+    // ComponentDidUpdate
     useEffect(() => {
         document.title = 'Comptes';
     });

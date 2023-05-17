@@ -1,5 +1,5 @@
 
-// import axios from 'axios';
+// Librairies
 import React, { useEffect, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import fire from '../../../config/firebase';
@@ -12,13 +12,13 @@ function Profile(props) {
 
     //State
     const [user, setUser] = useState(' ');
-    // const currentUser = user.displayName;
 
-  //ComponentDidMount
-  useEffect(() => {
-    return authListener();
-  },[]);
+    //ComponentDidMount
+    useEffect(() => {
+        return authListener();
+    },[]);
 
+    // Fonction pour vérifier si l'utilisateur est connecté
     const authListener = () => {
     return fire.auth().onAuthStateChanged(user => {
         if(user) {
@@ -29,7 +29,7 @@ function Profile(props) {
     });
     };
 
-    // Fonction
+    // Fonction pour se déconnecter
     const logoutClickedHandler = () => {
         fire.auth().signOut();
         toast('Au revoir !');

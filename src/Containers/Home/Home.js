@@ -12,45 +12,51 @@ function Home() {
        const [tweets, setTweets] = useState([]);
        const [chargement, setChargement] = useState(false);
 
+        // ComponentDidMount
        useEffect(() => {
+        //Récupérer les tweets
+        fetchTweets();
 
-            //Récupérer les tweets
-            fetchTweets();
-
-            return () => {
-                console.log('useEffect (didUnmount)');
-            }
+        // ComponentWillUnmount
+        return () => {
+            console.log('useEffect (didUnmount)');
+        }
         }, []);
 
-       // ComponentDidMount
+       // Récupérer les tweets
        const fetchTweets = () => {
-        setChargement(true);
-           axios.get('/tweets.json')
-           .then(response =>{
-              
-               let tweetsArray = [];
-   
-               for (let key in response.data) {
-                   tweetsArray.push({
-                       ...response.data[key],
-                       id: key
-                   });
-               }
+            // Début du chargement
+            setChargement(true);
+            axios.get('/tweets.json')
+            .then(response =>{
+                
+                let tweetsArray = [];
+    
+                for (let key in response.data) {
+                    tweetsArray.push({
+                        ...response.data[key],
+                        id: key
+                    });
+                }
 
-               // Chronologie
-               tweetsArray.reverse();
-   
-               setTweets(tweetsArray);
-               setChargement(false);
-           })
-           .catch(error => {
-               console.log(error);
-               setChargement(false);
-           });
+                // Chronologie
+                tweetsArray.reverse();
+    
+                    // Mise à jour du state
+                setTweets(tweetsArray);
+
+                // Fin du chargement
+                setChargement(false);
+            })
+            .catch(error => {
+                console.log(error);
+                setChargement(false);
+            });
        };
 
-       useEffect(() => {
-        document.title = 'Accueil';
+    // ComponentDidUpdate
+    useEffect(() => {
+    document.title = 'Accueil';
     });
    
     return (

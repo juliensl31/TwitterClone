@@ -64,6 +64,7 @@ function Authentification(props) {
         }
     });
 
+    // States
     const [valid, setValid] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [loginError, setLoginError] = useState(false);
@@ -71,7 +72,7 @@ function Authentification(props) {
     let displayName;
     // let photoURL;  
 
-    // Fonctions
+    // Fonction pour vérifier la validité du formulaire
     const inputChangedHandler = (event, id) => {
 
         // Change la valeur
@@ -92,7 +93,7 @@ function Authentification(props) {
         setValid(formIsValid);
     };
 
-     // Concaténer et capitaliser le pseudo 
+    // Concaténer et capitaliser le pseudo 
     const toCapitalizeFirst = str => {
         const capitalizeFirst = str
             .toLowerCase()
@@ -105,14 +106,16 @@ function Authentification(props) {
             return capitalizeFirst;
         };
 
+    // Fonction pour l'inscription
     const registerClickedHandler = () => {
         
+        // Créer l'utilisateur
         const user = {
             email: inputs.email.value,
             password: inputs.password.value
         };
 
-        
+        // Créer le compte
         fire.auth()
             .createUserWithEmailAndPassword(user.email, user.password)
             .then(response => {
@@ -129,6 +132,7 @@ function Authentification(props) {
                 }
             });
 
+            // Mettre à jour le profil
            fire.auth().onAuthStateChanged( (user) => {
             if (user) {
                 user.updateProfile({ 
@@ -136,11 +140,13 @@ function Authentification(props) {
                 // photoURL: "https://example.com/jane-q-user/profile.jpg"
                 })
                 .then(response => {
+                    // Créer le compte
                     const accountInformation = {
                         pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
                         follow: false,
                         user_id: user.uid
                     };
+                    // Mettre à jour la base de données
                     axios.post('/users.json', accountInformation)
                     .then(response => {
                         console.log(response);
@@ -159,13 +165,16 @@ function Authentification(props) {
             
     };
 
+    // Fonction pour la connexion
     const loginClickedHandler = () => {
 
+        // Créer l'utilisateur
         const user = {
             email: inputs.email.value,
             password: inputs.password.value
         };
 
+        // Connexion
         fire.auth()
             .signInWithEmailAndPassword(user.email, user.password)
             .then(response => {
@@ -185,8 +194,10 @@ function Authentification(props) {
             });
         }
 
+    // Fonction pour la connexion avec Google
     const loginGoogleClickedHandler = () => {
 
+        // Connexion
         fire.auth().signInWithPopup(provider)
         .then(response => {
             toast('Bienvenue');
@@ -195,7 +206,7 @@ function Authentification(props) {
         .catch(error => {
            console.log(error);
         });
-
+        // Mettre à jour le profil
         fire.auth().onAuthStateChanged( (user) => {
             if (user) {
                 user.updateProfile({ 
@@ -203,11 +214,13 @@ function Authentification(props) {
                 // photoURL: "https://example.com/jane-q-user/profile.jpg"
                 })
                 .then(response => {
+                // Créer le compte
                 const accountInformation = {
                     pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
                     follow: false,
                     user_id: user.uid
                 };
+                // Mettre à jour la base de données
                 axios.post('/users.json', accountInformation)
                 .then(response => {
                     console.log(response);
@@ -225,7 +238,7 @@ function Authentification(props) {
         });
     };
     
-
+    // fonction d'envoi du formulaire
     const formHandler = event => {
         event.preventDefault();
     };
@@ -239,6 +252,7 @@ function Authentification(props) {
         });
     };
 
+    // Formulaire
     let form = (
         <form onSubmit={(e) => formHandler(e)}>
             <h1>Authentification</h1>

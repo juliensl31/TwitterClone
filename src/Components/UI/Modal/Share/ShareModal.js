@@ -1,10 +1,14 @@
+// Librairies
 import React, { useState } from 'react';
 import classes from './ShareModal.module.css';
 
 
 function ShareModal(props) {
+
+  // State
   const [showShareModal, setShowShareModal] = useState(false);
 
+  // Fonctions pour afficher ou cacher le modal
   const showShareModalHandler = () => {
     setShowShareModal(true);
   };

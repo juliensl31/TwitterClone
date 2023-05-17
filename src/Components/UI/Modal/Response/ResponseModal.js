@@ -1,3 +1,4 @@
+// Librairies
 import React, { useEffect, useState } from 'react';
 import classes from './ResponseModal.module.css';
 import axios from '../../../../config/axios-firebase';
@@ -8,7 +9,6 @@ import { checkValidity } from '../../../../shared/utility';
 import Input from '../../../UI/Input/Input';
 import { toast } from 'react-toastify';
 import { withRouter } from 'react-router-dom';
-import routes from '../../../../config/routes';
 
 
 function ResponseModal(props) {
@@ -17,9 +17,8 @@ function ResponseModal(props) {
   const [showResponseModal, setShowResponseModal] = useState(false);
   const [valid, setValid] = useState(false);
   const [user, setUser] = useState(' ');
+  //eslint-disable-next-line
   const [tweets, setTweets] = useState(' ');
-
-
   const [inputs, setInputs] = useState({
     contenu: {
       elementType: 'textarea',
@@ -36,6 +35,17 @@ function ResponseModal(props) {
     }
   });
 
+ // ComponentDidUpdate
+  useEffect(() => {
+    document.title = "Mon compte";
+  });
+
+  // ComponentDidMount
+  useEffect(() => {
+      return authListener();
+  },[]);
+  
+  // Fonctions pour afficher ou cacher le modal
   const showResponseModalHandler = () => {
     setShowResponseModal(true);
   };
@@ -44,16 +54,7 @@ function ResponseModal(props) {
     setShowResponseModal(false);
   };
 
-  // ComponentDidUpdate
-  useEffect(() => {
-    document.title = "Mon compte";
-  });
-
-
-  useEffect(() => {
-    authListener();
-  }, []);
-
+  // Fonction pour vérifier si l'utilisateur est connecté
   const authListener = () => {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
@@ -65,7 +66,7 @@ function ResponseModal(props) {
     });
   };
 
-  // Fonctions
+  // Fonction pour vérifier la validité du formulaire
   const inputChangedHandler = (event, id) => {
 
     // Change la valeur
@@ -86,8 +87,9 @@ function ResponseModal(props) {
     setValid(formIsValid);
 };
 
+// Récupération des tweets
 useEffect(() => {
-  axios.get('/tweets.json?orderBy="id"')
+  axios.get('/tweets.json')
       .then(response => {
       
       const fetchedTweets = [];
@@ -105,9 +107,16 @@ useEffect(() => {
       });
 }, []);
 
+// Fonction pour rafraîchir la page apres l'envoi du formulaire
+function refreshPage() {
+  window.location.reload(false);
+}
+
+// Fonction pour envoyer le formulaire
 const formHandler = event => {
   event.preventDefault();
 
+  // Données du formulaire
   const response = {
       contenu: inputs.contenu.value,
       date: Date.now(),
@@ -116,6 +125,7 @@ const formHandler = event => {
       
   };
 
+  // Envoi du formulaire
   fire.auth().currentUser.getIdToken()
       .then(token => {
           axios.post('/responses.json?auth=' + token, response)
@@ -123,7 +133,7 @@ const formHandler = event => {
                   console.log(response);
                   toast('réponse ajouté avec succès');
                   hideResponseModalHandler();
-                  props.history.replace(routes.TWEETS + '/' + props.match.params.slug);  
+                  refreshPage();  
                 })
               .catch(error => {
                   console.log(error);
@@ -143,6 +153,7 @@ const formHandler = event => {
       });
   };
 
+  // Formulaire
   let form = (
     <form className={classes.Ajouter} onSubmit={(e) => formHandler(e)}>
         {formElementsArray.map(formElement => (

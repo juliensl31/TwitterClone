@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../../config/axios-firebase';
 import fire from '../../config/firebase';
 
-// Components
+// Composant
 import DisplayedTweets from '../../Components/DisplayedTweets/DisplayedTweets';
 
 function Tweets() {
@@ -13,6 +13,7 @@ function Tweets() {
 
     // ComponentDidMount
     useEffect(() => {
+      // Récupérer les tweets
       const authListener = () => {
         fire.auth().onAuthStateChanged(user => {
           if(user) {
@@ -26,8 +27,10 @@ function Tweets() {
                         id: key
                     });
                 }
-                                    
+                
+                // Filtrer les tweets
                 tweetsArray = tweetsArray.filter(tweet => tweet.auteur === user.displayName);
+                
                 // Chronologie
                 setTweets(tweetsArray.reverse());
               })
@@ -37,10 +40,11 @@ function Tweets() {
           }
         });
       }
-
+      // Lancer la fonction
       authListener();
     },[]);
   
+    // ComponentDidUpdate
     useEffect(() => {
         document.title = 'Mes tweets';
     }, []);

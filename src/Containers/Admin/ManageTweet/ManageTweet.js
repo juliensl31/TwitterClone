@@ -65,11 +65,12 @@ function ManageTweet(props) {
         document.title = "Mon compte";
     });
 
-    //ComponentDidMount
+    // ComponentDidMount
     useEffect(() => {
         authListener();
     },[]);
 
+    // Fonction pour vérifier si l'utilisateur est connecté
     const authListener = () => {
         fire.auth().onAuthStateChanged(user => {
         if(user) {
@@ -81,7 +82,7 @@ function ManageTweet(props) {
         });
     } ;
 
-    // Fonctions
+    // Fonction de changement de valeur
     const inputChangedHandler = (event, id) => {
 
         // Change la valeur
@@ -122,40 +123,14 @@ function ManageTweet(props) {
         return str;
     };
 
-    // Générer une chaîne de caractères aléatoire
-    // const strRandom = (auteur) => {
-    //     let a = 10,
-    //         b = 'abcdefghijklmnopqrstuvwxyz',
-    //         c = '',
-    //         d = 0,
-    //         e = ''+b;
-    //     if (auteur) {
-    //       if (auteur.startsWithLowerCase) {
-    //         c = b[Math.floor(Math.random() * b.length)];
-    //         d = 1;
-    //       }
-    //       if (auteur.length) {
-    //         a = auteur.length;
-    //       }
-    //       if (auteur.includeUpperCase) {
-    //         e += b.toUpperCase();
-    //       }
-    //       if (auteur.includeNumbers) {
-    //         e += '1234567890';
-    //       }
-    //     }
-    //     for (; d < a; d++) {
-    //       c += e[Math.floor(Math.random() * e.length)];
-    //     }
-    //     return c;
-    // };
-
+    // Fonction pour envoyer le formulaire
     const formHandler = event => {
         event.preventDefault();
 
-        
+        // Créer un slug
         const slug = generateSlug(inputs.titre.value);
 
+        // Créer un objet tweet
         const tweet = {
             titre: inputs.titre.value,
             contenu: inputs.contenu.value,
@@ -166,6 +141,7 @@ function ManageTweet(props) {
             user_id: user.uid
         };
 
+        // Envoyer le tweet
         fire.auth().currentUser.getIdToken()
             .then(token => {
                 axios.post('/tweets.json?auth=' + token, tweet)
@@ -192,6 +168,7 @@ function ManageTweet(props) {
         });
     };
 
+    // Formulaire
     let form = (
         <form className={classes.Ajouter} onSubmit={(e) => formHandler(e)}>
             {formElementsArray.map(formElement => (

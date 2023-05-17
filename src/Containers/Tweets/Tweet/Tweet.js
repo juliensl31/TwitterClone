@@ -9,6 +9,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import { ShareSocial } from 'react-share-social';
 
+// Composants
 import ShareModal from '../../../Components/UI/Modal/Share/ShareModal';
 import ResponseModal from '../../../Components/UI/Modal/Response/ResponseModal';
 import Follow from '../../../Components/Follow/Follow';
@@ -22,6 +23,7 @@ function Tweet(props) {
     const [responses, setResponses] = useState([]);
     const [chargement, setChargement] = useState(false);
 
+    // ComponentDidMount
     useEffect(() => {
 
         //Récupérer les tweets
@@ -34,7 +36,9 @@ function Tweet(props) {
 
     // ComponentDidMount
     const fetchTweets = () => {
+        // Début du chargement
         setChargement(true);
+        // Récupérer les tweets
         axios.get('/tweets.json?orderBy="slug"&equalTo="' + props.match.params.slug + '"')
             .then(response => {
 
@@ -49,6 +53,7 @@ function Tweet(props) {
                         ...response.data[key],
                         id: key
                     });
+                    // Fin du chargement    
                     setChargement(false);
                 }
             })
@@ -59,7 +64,9 @@ function Tweet(props) {
 
     }
 
+    // ComponentDidMount
     useEffect(() => {
+        // Récupérer les réponses
         axios.get('/responses.json')
             .then(response => {
 
@@ -71,7 +78,9 @@ function Tweet(props) {
                         id: key,
                     });
                 }
+                // Chronologie
                 fetchedResponses.reverse();
+                // Mise à jour du state
                 setResponses(fetchedResponses);
             })
             .catch(error => {
@@ -84,7 +93,7 @@ function Tweet(props) {
         document.title = tweet.titre;
     });
 
-    // Fonctions
+    // Fonction pour supprimer un tweet
     const deleteClickedHandler = () => {
 
         props.user.getIdToken()
@@ -103,7 +112,7 @@ function Tweet(props) {
             });
     }
 
-    // Variable
+    // Date
     moment.locale('fr');
     let date = moment.unix(tweet.date / 1000).calendar();
 

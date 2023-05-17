@@ -8,7 +8,7 @@ import {ShareSocial} from 'react-share-social';
 import moment from 'moment';
 import 'moment/locale/fr';
 
-
+// Composants
 import ShareModal from '../../UI/Modal/Share/ShareModal';
 import Follow from '../../Follow/Follow';
 import fire from '../../../config/firebase';
@@ -25,6 +25,7 @@ function DisplayedTweet(props) {
        return authListener();
     },[]);
 
+    //ComponentDidMount
     useEffect(() => {
         axios.get('/responses.json')
             .then(response => {
@@ -37,6 +38,7 @@ function DisplayedTweet(props) {
                         id: key,
                     });
                 }
+                // Mise à jour du state
                 setResponses(fetchedResponses);
             })
             .catch(error => {
@@ -44,6 +46,7 @@ function DisplayedTweet(props) {
             });
     }, []);
 
+    // Fonction pour vérifier si l'utilisateur est connecté
     const authListener = () => {
         fire.auth().onAuthStateChanged(user => {
         if(user) {
@@ -75,6 +78,7 @@ function DisplayedTweet(props) {
                     <small>{date}</small>  
                 </div>
                 <div className={classes.icons}>
+
                     {props.tweet.auteur !== user.displayName ? <Follow/> : null}
 
                     <svg  xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
@@ -82,10 +86,9 @@ function DisplayedTweet(props) {
                     </svg>
                     {responses.length > 0 ?
                     <b>{responses.filter(response => response.tweet_id === props.tweet.slug).length}</b>
-                : 
-                null}
+                    : 
+                    null}
                     
-
                     <ShareModal>
                         <ShareSocial
                             className={classes.ShareSocial}

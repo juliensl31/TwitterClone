@@ -1,4 +1,4 @@
-// MLibrairie
+// Librairie
 import React from 'react';
 import DisplayedAccount from './DisplayedAccount/DisplayedAccount';
 import classes from './DisplayedAccounts.module.css';
