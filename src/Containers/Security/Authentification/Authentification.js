@@ -106,6 +106,11 @@ function Authentification(props) {
             return capitalizeFirst;
         };
 
+    // Fonction pour rafraîchir la page apres l'envoi du formulaire
+    function refreshPage() {
+        window.location.reload(false);
+    }    
+
     // Fonction pour l'inscription
     const registerClickedHandler = () => {
         
@@ -149,6 +154,7 @@ function Authentification(props) {
                     axios.post('/users.json', accountInformation)
                     .then(response => {
                         console.log(response);
+                        refreshPage();
                     })
                     .catch(error => {
                         console.log(error);
@@ -222,6 +228,7 @@ function Authentification(props) {
                 axios.post('/users.json', accountInformation)
                 .then(response => {
                     console.log(response);
+                    refreshPage();
                 })
                 .catch(error => {
                     console.log(error);
