@@ -9,7 +9,6 @@ import classes from './Account.module.css';
 // Composants
 import Follow from '../../../Components/Follow/Follow';
 import DisplayedTweets from '../../../Components/DisplayedTweets/DisplayedTweets';
-import fire from '../../../config/firebase';
 
 // Functions
 function Account(props) {
@@ -46,6 +45,7 @@ function Account(props) {
 
     }, [props.match.params.pseudo]); // Si le pseudo change, le useEffect se relance
 
+    // Fonction pour suivre ou ne plus suivre un compte
     const followClickHandler = (index) => {
         // Modification du state
         const newAccount = [...account];
@@ -56,13 +56,19 @@ function Account(props) {
         axios.put('/users/' + newAccount[index].id + '.json', newAccount[index])
         .then(response => {
             console.log(response);
-            toast("Vous suivez " + newAccount[index].pseudo);
+            // Condition pour afficher le bon message
+            {newAccount[index].followed ? 
+                toast("Vous suivez " + newAccount[index].pseudo) 
+            : 
+                toast("Vous ne suivez plus " + newAccount[index].pseudo)
+            }
         } )
         .catch(error => {
             console.log(error);
         });
     };
 
+    // Afficher les comptes suivis
     let followedAccount = account.map((account, index) => (
         <Follow 
             key={index}
