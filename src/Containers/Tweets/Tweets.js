@@ -15,6 +15,7 @@ function Tweets() {
     useEffect(() => {
       // Récupérer les tweets
       const authListener = () => {
+        // Vérifier si l'utilisateur est connecté
         fire.auth().onAuthStateChanged(user => {
           if(user) {
             axios.get('/tweets.json')

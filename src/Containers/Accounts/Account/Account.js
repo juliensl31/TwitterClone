@@ -9,6 +9,7 @@ import classes from './Account.module.css';
 // Composants
 import Follow from '../../../Components/Follow/Follow';
 import DisplayedTweets from '../../../Components/DisplayedTweets/DisplayedTweets';
+import fire from '../../../config/firebase';
 
 // Functions
 function Account(props) {
@@ -19,7 +20,6 @@ function Account(props) {
 
     // ComponentDidMount
     useEffect(() => {
-
         // Récupérer les données de l'utilisateur
         axios.get('/users.json?orderBy="pseudo"&equalTo="'+ props.match.params.pseudo +'"')
         .then(response => {
@@ -45,6 +45,32 @@ function Account(props) {
         });
 
     }, [props.match.params.pseudo]); // Si le pseudo change, le useEffect se relance
+
+    const followClickHandler = (index) => {
+        // Modification du state
+        const newAccount = [...account];
+        newAccount[index].followed = !newAccount[index].followed;
+        setAccount(newAccount);
+
+        // Modification des données de l'utilisateur
+        axios.put('/users/' + newAccount[index].id + '.json', newAccount[index])
+        .then(response => {
+            console.log(response);
+            toast("Vous suivez " + newAccount[index].pseudo);
+        } )
+        .catch(error => {
+            console.log(error);
+        });
+    };
+
+    let followedAccount = account.map((account, index) => (
+        <Follow 
+            key={index}
+            user={account.pseudo}
+            followed={account.followed}
+            followClicked={() => followClickHandler(index)}
+        />
+    ));
 
     // Récupérer les tweets
     useEffect(() => {
@@ -86,7 +112,7 @@ function Account(props) {
                 <h2>{props.match.params.pseudo}</h2>
                 <div className={classes.Account_info}>
                     <p><b>{tweets.length}</b> tweets</p>
-                    <Follow user={props.user} account={account} />
+                    {followedAccount}
                 </div>
                 
             </div>

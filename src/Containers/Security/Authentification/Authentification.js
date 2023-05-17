@@ -143,7 +143,6 @@ function Authentification(props) {
                     // Créer le compte
                     const accountInformation = {
                         pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
-                        follow: false,
                         user_id: user.uid
                     };
                     // Mettre à jour la base de données
@@ -217,7 +216,6 @@ function Authentification(props) {
                 // Créer le compte
                 const accountInformation = {
                     pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
-                    follow: false,
                     user_id: user.uid
                 };
                 // Mettre à jour la base de données
