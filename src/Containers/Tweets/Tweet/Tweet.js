@@ -19,9 +19,9 @@ function Tweet(props) {
 
     // State
     const [tweet, setTweet] = useState([]);
-    const currentUser = props.user.displayName;
     const [responses, setResponses] = useState([]);
     const [chargement, setChargement] = useState(false);
+    const currentUser = props.user.displayName;
 
     // ComponentDidMount
     useEffect(() => {
@@ -95,7 +95,7 @@ function Tweet(props) {
 
     // Fonction pour supprimer un tweet
     const deleteClickedHandler = () => {
-
+        // récupérer le token de l'utilisateur connecté pour supprimer le tweet
         props.user.getIdToken()
             .then(token => {
                 axios.delete('/tweets/' + tweet.id + '.json?auth=' + token)

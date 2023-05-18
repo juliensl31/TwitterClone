@@ -7,17 +7,16 @@ import routes from '../../../config/routes';
 import classes from './Account.module.css';
 
 // Composants
-import Follow from '../../../Components/Follow/Follow';
 import DisplayedTweets from '../../../Components/DisplayedTweets/DisplayedTweets';
 
 // Functions
 function Account(props) {
 
     // States
+    // eslint-disable-next-line
     const [account, setAccount] = useState([]);
     const [tweets, setTweets] = useState([]);
 
-    // ComponentDidMount
     useEffect(() => {
         // Récupérer les données de l'utilisateur
         axios.get('/users.json?orderBy="pseudo"&equalTo="'+ props.match.params.pseudo +'"')
@@ -45,39 +44,6 @@ function Account(props) {
 
     }, [props.match.params.pseudo]); // Si le pseudo change, le useEffect se relance
 
-    // Fonction pour suivre ou ne plus suivre un compte
-    const followClickHandler = (index) => {
-        // Modification du state
-        const newAccount = [...account];
-        newAccount[index].followed = !newAccount[index].followed;
-        setAccount(newAccount);
-
-        // Modification des données de l'utilisateur
-        axios.put('/users/' + newAccount[index].id + '.json', newAccount[index])
-        .then(response => {
-            console.log(response);
-            // Condition pour afficher le bon message
-            {newAccount[index].followed ? 
-                toast("Vous suivez " + newAccount[index].pseudo) 
-            : 
-                toast("Vous ne suivez plus " + newAccount[index].pseudo)
-            }
-        } )
-        .catch(error => {
-            console.log(error);
-        });
-    };
-
-    // Afficher les comptes suivis
-    let followedAccount = account.map((account, index) => (
-        <Follow 
-            key={index}
-            user={account.pseudo}
-            followed={account.followed}
-            followClicked={() => followClickHandler(index)}
-        />
-    ));
-
     // Récupérer les tweets
     useEffect(() => {
     axios.get('/tweets.json?')
@@ -104,7 +70,7 @@ function Account(props) {
     .catch(error => {
         console.log(error);
     });
-    }, []); // Si le slug change, le useEffect se relance
+    }, []); 
 
 
     // ComponentDidUpdate
@@ -118,7 +84,6 @@ function Account(props) {
                 <h2>{props.match.params.pseudo}</h2>
                 <div className={classes.Account_info}>
                     <p><b>{tweets.length}</b> tweets</p>
-                    {followedAccount}
                 </div>
                 
             </div>

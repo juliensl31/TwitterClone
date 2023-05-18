@@ -11,6 +11,7 @@ function Accounts() {
 
     // Récupérer les comptes
     useEffect(() => {
+        // Récupérer les comptes
         axios.get('/users.json')
         .then(response => {
             // Mettre les données dans un tableau

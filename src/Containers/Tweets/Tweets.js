@@ -12,38 +12,38 @@ function Tweets() {
     const [tweets, setTweets] = useState([]);
 
     // ComponentDidMount
-    useEffect(() => {
-      // Récupérer les tweets
-      const authListener = () => {
-        // Vérifier si l'utilisateur est connecté
-        fire.auth().onAuthStateChanged(user => {
-          if(user) {
-            axios.get('/tweets.json')
-              .then(response => {
-                let tweetsArray = [];
+  useEffect(() => {
+    // Récupérer les tweets
+    const authListener = () => {
+      // Vérifier si l'utilisateur est connecté
+      fire.auth().onAuthStateChanged(user => {
+        if (user) {
+          axios.get('/tweets.json')
+            .then(response => {
+              let tweetsArray = [];
 
-                for (let key in response.data) {
-                    tweetsArray.push({
-                        ...response.data[key],
-                        id: key
-                    });
-                }
-                
-                // Filtrer les tweets
-                tweetsArray = tweetsArray.filter(tweet => tweet.auteur === user.displayName);
-                
-                // Chronologie
-                setTweets(tweetsArray.reverse());
-              })
-              .catch(error => {
-                  console.log(error);
-              });
-          }
-        });
-      }
-      // Lancer la fonction
-      authListener();
-    },[]);
+              for (let key in response.data) {
+                tweetsArray.push({
+                  ...response.data[key],
+                  id: key
+                });
+              }
+
+              // Filtrer les tweets
+              tweetsArray = tweetsArray.filter(tweet => tweet.auteur === user.displayName);
+
+              // Chronologie
+              setTweets(tweetsArray.reverse());
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      });
+    }
+    // Lancer la fonction
+    authListener();
+  }, []);
   
     // ComponentDidUpdate
     useEffect(() => {
