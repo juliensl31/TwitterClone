@@ -15,6 +15,7 @@ import ManageTweet from './Containers/Admin/ManageTweet/ManageTweet';
 import Authentification from './Containers/Security/Authentification/Authentification';
 import Accounts from './Containers/Accounts/Accounts';
 import Account from './Containers/Accounts/Account/Account';
+import Followed from './Containers/Accounts/Followed/Followed';
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
           <Route exact path={routes.TWEETS} component={Tweets} />
           <Route exact path={routes.TWEETS + "/:slug"} render={() => <Tweet user={user} />} />
           <Route exact path={routes.ACCOUNTS} render={() => <Accounts user={user}/>}/>
+          <Route exact path={routes.FOLLOW} render={() => <Followed user={user}/>}/>
           <Route exact path={routes.ACCOUNTS + "/:pseudo"} render={() => <Account user={user}/>} />
           {user ? <Route exact path={routes.MANAGE_TWEET} component={ManageTweet} /> : null}
           {!user ? <Route exact path={routes.AUTHENTIFICATION} component={Authentification} /> : null}

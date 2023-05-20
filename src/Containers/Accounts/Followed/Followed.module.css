@@ -1,4 +1,4 @@
-.DisplayedAccount {
+.Followed {
     width: 550px;
     padding: 0 15px;
     background-color: #1f1e1e62;
@@ -10,12 +10,12 @@
     border-radius: 8px;
 }
 
-.DisplayedAccount h2 {
+.Followed h2 {
     text-align: start;
     margin-bottom: 10px;
 }
 
-.DisplayedAccount:hover {
+.Followed:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     color: white !important;
 }

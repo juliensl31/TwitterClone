@@ -12,7 +12,6 @@ import { ShareSocial } from 'react-share-social';
 // Composants
 import ShareModal from '../../../Components/UI/Modal/Share/ShareModal';
 import ResponseModal from '../../../Components/UI/Modal/Response/ResponseModal';
-import Follow from '../../../Components/Follow/Follow';
 import Spinner from '../../../Components/UI/Spinner/Spinner';
 
 function Tweet(props) {
@@ -138,7 +137,7 @@ function Tweet(props) {
                             </div>
                             <div className={classes.icons}>
 
-                                {tweet.auteur !== currentUser ? <Follow /> : null}
+                                {/* {tweet.auteur !== currentUser ? <Follow /> : null} */}
 
                                 <ResponseModal />{responses.filter(response => response.tweet_id === props.match.params.slug).length}
 
