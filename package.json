@@ -47,5 +47,6 @@
   },
   "devDependencies": {
     "@types/prop-types": "^15.7.5"
-  }
+  },
+  "homepage" : "http://myname.github.io/twitter-clone"
 }
