@@ -121,11 +121,16 @@ function Tweet(props) {
         <>
             {chargement ? <><div className="container">Chargement...</div> <Spinner /></> :
                 <>
+                    <h1>Tweet de {tweet.auteur}</h1>
                     <div className={[classes.Tweet, 'container'].join(' ')}>
                         <h2>{tweet.titre}</h2>
                         <div className={classes.section}>
                             <div className={classes.content}>
                                 {tweet.contenu}
+                                <div className={classes.hashtag}>
+                                   {tweet.hashtag} 
+                                </div>
+                                
                             </div>
                         </div>
                         <div className={classes.footer}>
@@ -136,8 +141,6 @@ function Tweet(props) {
                                 </span>
                             </div>
                             <div className={classes.icons}>
-
-                                {/* {tweet.auteur !== currentUser ? <Follow /> : null} */}
 
                                 <ResponseModal />{responses.filter(response => response.tweet_id === props.match.params.slug).length}
 
@@ -162,19 +165,19 @@ function Tweet(props) {
                         </div>
                     </div>
                     <div className={classes.response}>
-                        <h3>Réponses</h3>
+                        <h3>Réponses au tweet</h3>
 
                         {responses.map(response => (
                             <div key={response.id}>
                                 {props.match.params.slug === response.tweet_id ?
                                     <div className={classes.GetResponse}>
-                                        <p className={classes.content}>{response.contenu}</p>
-                                        <div >
+                                       
+                                            <p className={classes.content}>{response.contenu}</p>
                                             <div className={classes.footer}>
                                                 <div>Publié par : <Link to={routes.ACCOUNTS + '/' + response.auteur}><b>{response.auteur}</b></Link></div>
                                                 <small>{moment(response.date).fromNow()}</small>
                                             </div>
-                                        </div>
+                                        
                                     </div>
                                     : null}
                             </div>

@@ -4,13 +4,13 @@ a {
 }
 a:hover {
     font-weight: bold;
-    color: #fb743e;
+    color: #00818A;
 }
 
 .button {
     border: 0;
     padding: 10px 15px;
-    background-color: #fb743e;
+    background-color: #00818A;
     color: white;
     margin: 5px;
     border-radius: 4px;
@@ -19,5 +19,5 @@ a:hover {
 
 .button:focus,
 .button:hover {
-    background-color: #d3450d;
+    background-color: #01646b;
 }

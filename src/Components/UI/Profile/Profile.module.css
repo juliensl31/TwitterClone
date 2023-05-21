@@ -1,6 +1,6 @@
 .Profile {
     width: 400px;
-    background-color: #1f1e1e62;
+    background-color: #404B69;
     color: white;
     padding: 30px;
     margin-top: 50px;
@@ -18,7 +18,7 @@
 .button {
     border: 0;
     padding: 10px 15px;
-    background-color: #fb743e;
+    background-color: #00818A;
     color: white;
     margin-top: 20px;
     cursor: pointer;
@@ -34,7 +34,7 @@
 }
 .button:focus,
 .button:hover {
-    background-color: #d3450d;
+    background-color: #01646b;
 }
 
 .items {

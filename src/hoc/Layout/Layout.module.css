@@ -1,6 +1,7 @@
 :global .container {
     width: 100%;
     max-width: 1000px;
+    /* min-width: 600px; */
     margin: 0 auto;
 }
 
@@ -20,7 +21,6 @@ svg {
 }
 
 .auth {
-    display: flex;
     justify-content: space-around;
     align-items: flex-start;
     margin: 10px 50px;
@@ -28,7 +28,6 @@ svg {
 
 .content {
     overflow-y: scroll;
-    width: 50%;
     height: 800px;
     padding: 0;
     padding-top: 20px;
@@ -37,9 +36,9 @@ svg {
     width: 1em;
 }
 .content::-webkit-scrollbar-track {
-    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     margin-top: 40px;
 }
 .content::-webkit-scrollbar-thumb {
-  background-color: #55525262;
+  background-color: #01646b;
 }

@@ -1,6 +1,7 @@
 // Librairie
 import axios from '../../config/axios-firebase';
 import React, { useEffect, useState } from 'react';
+import classes from './Home.module.css';
 
 // Composant
 import DisplayedTweets from '../../Components/DisplayedTweets/DisplayedTweets';
@@ -60,7 +61,7 @@ function Home() {
     });
    
     return (
-        <div className='container'> 
+        <div className={[classes.Home, 'container'].join(' ')}> 
             <h1>Explorer</h1>
             {chargement ? 
                 <>

@@ -15,10 +15,10 @@
     cursor: pointer;
     border-radius: 4px;
     transition: .3s;
-    background-color: #fb743e;
+    background-color: #00818A;
     color: white;
 }
 
 .logout:hover {
-    background-color: #d3450d;
+    background-color: #01646b;
 }

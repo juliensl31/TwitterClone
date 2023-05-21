@@ -91,7 +91,7 @@ function Followed(props) {
     });
 
     return (
-        <div>
+        <div className={classes.Follow}>
         <h1>Vos comptes suivis</h1>
         {followed.map(follow => (
             <div key={follow.id} >

@@ -1,6 +1,6 @@
 svg {
     cursor: pointer;
-    color: #fb743e;
+    color: #00818A;
 }
 
 .ResponseModal {
@@ -21,7 +21,7 @@ svg {
 }
 
 .ResponseModalContent {
-  background-color: #000000;
+  background-color: #283149;
   opacity: .95;
   margin: 15% auto;
   padding: 20px;
@@ -57,7 +57,7 @@ svg {
 
 .submit input {
   padding: 10px 15px;
-  background-color: #fb743e;
+  background-color: #00818A;
   color: white;
   width: 100%;
   margin: 5px;
@@ -73,7 +73,7 @@ svg {
 
 .submit input:focus,
 .submit input:hover {
-  background-color: #d3450d;
+  background-color: #01646b;
 }
  
   

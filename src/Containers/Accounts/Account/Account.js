@@ -167,30 +167,38 @@ function Account(props) {
     return (
         <>
             <div className={[classes.Account, 'container'].join(' ')}>
-                <h2>{props.match.params.pseudo}</h2>
+                <div className={classes.pseudo}>
+                    <h2>{props.match.params.pseudo}</h2>
+                    {follows.length >= 0  ?
+                        follows.filter(follow => follow.follower === currentUser && follow.followed === props.match.params.pseudo).length > 0 ?
+                            <div onClick={unFollowClickHandler}><UnFollow /></div>
+                        :
+                            <div onClick={followClickHandler}><Follow /></div>
+                    :
+                    null}
+                </div>
                 <div className={classes.Account_info}>
-                    <p><b>{tweets.length}</b> tweet(s)</p>
+                
                     {follows.length >= 0 ?
                         <p><b>{follows.filter(follow => follow.followed === props.match.params.pseudo).length}</b> abonné(s)</p>
                     :
                     null}
+
                     {follows.length >= 0 && props.match.params.pseudo === userName ?
                         <p><b>{follows.filter(follow => follow.follower === currentUser).length}</b> abonnement(s)</p>
                     :
                     null}
-                     {follows.length >= 0  ?
-                    follows.filter(follow => follow.follower === currentUser && follow.followed === props.match.params.pseudo).length > 0 ?
-                        <div onClick={unFollowClickHandler}><UnFollow /></div>
-                    :
-                        <div onClick={followClickHandler}><Follow /></div>
-                :
-                null}
+
+                    <p><b>{tweets.length}</b> tweet(s)</p>
+                    
 
                 </div>
                 
             </div>
-            <h2>Les Tweets de {props.match.params.pseudo}</h2>
-            <DisplayedTweets tweets={tweets} />
+            <div className={classes.Account_tweets}>
+                <h2>Les Tweets de {props.match.params.pseudo}</h2>
+                <DisplayedTweets tweets={tweets} />
+            </div>
 
         </>
     );

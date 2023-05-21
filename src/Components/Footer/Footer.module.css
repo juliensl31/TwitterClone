@@ -1,6 +1,6 @@
 .Footer {
-    color: #fb743e;
-    background-color: #000000;
+    color: #00818A;
+    background-color: #283149;
     border-top: 1px solid silver;
     padding: 20px;
     font-size: .9rem;
@@ -9,10 +9,10 @@
 
 .Footer a {
     text-decoration: none;
-    color: #fb743e;
+    color: #00818A;
 }
 
 .Footer a:hover {
-    color: #d3450d;
+    color: #01646b;
     font-weight: bold;
 }

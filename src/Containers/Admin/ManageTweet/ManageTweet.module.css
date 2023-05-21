@@ -14,7 +14,7 @@
 .submit input {
     border: 0;
     padding: 10px 15px;
-    background-color: #fb743e;
+    background-color: #00818A;
     color: white;
     margin: 5px;
     width: 100%;
@@ -30,5 +30,5 @@
 
 .submit input:focus,
 .submit input:hover {
-    background-color: #d3450d;
+    background-color: #01646b;
 }

@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import classes from './Accounts.module.css';
 import axios from "../../config/axios-firebase";
+
+// Composants
 import DisplayedAccounts from "../../Components/DisplayedAccounts/DisplayedAccounts";
 
 function Accounts() {
@@ -37,13 +39,9 @@ function Accounts() {
 
 
     return (
-        <div > 
+        <div className={classes.Accounts} > 
             <h1>Comptes</h1>
-            <p>Voici la liste des comptes</p>
-            <div className={classes.Accounts}>
-                <DisplayedAccounts accounts={accounts}/>
-            </div>
-            
+            <DisplayedAccounts accounts={accounts}/>
         </div>
     );
 }

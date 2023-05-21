@@ -112,7 +112,7 @@ function DisplayedAccount(props) {
                 console.log(response);
 
                 // Mettre à jour le state
-                setFollows(prevFollows => prevFollows.filter(follow => follow.id !== followId));
+                setFollows(follows.filter(follow => follow.id !== followId));
                 toast("Vous ne suivez plus " + props.account.pseudo);
             })
             .catch(error => {
@@ -150,11 +150,19 @@ function DisplayedAccount(props) {
 
     return (
         <div className={classes.DisplayedAccount}>
-            <Link className={classes.link} to={routes.ACCOUNTS + '/' + props.account.pseudo}>
-                <div>
+                <div className={classes.pseudo}>
+                 <Link className={classes.link} to={routes.ACCOUNTS + '/' + props.account.pseudo}>   
                     <h2>{props.account.pseudo}</h2>
+                </Link>
+                    {follows.length >= 0  ?
+                        follows.filter(follow => follow.follower === currentUser && follow.followed === props.account.pseudo).length > 0 ?
+                            <div onClick={unFollowClickHandler}><UnFollow /></div>
+                        :
+                            <div onClick={followClickHandler}><Follow /></div>
+                    :
+                    null}
                 </div>
-            </Link>
+            
             <div className={classes.footer}>
                 {tweets.length > 0 ?
                     <div><b>{tweets.filter(tweet => tweet.auteur === props.account.pseudo).length}</b> Tweet(s)</div>
@@ -166,13 +174,6 @@ function DisplayedAccount(props) {
                 null}
                 {follows.length >= 0 && userName === props.account.pseudo ?
                     <div><b>{follows.filter(follow => follow.follower === currentUser).length}</b> Abonnement(s)</div>
-                :
-                null}
-                {follows.length >= 0  ?
-                    follows.filter(follow => follow.follower === currentUser && follow.followed === props.account.pseudo).length > 0 ?
-                        <div onClick={unFollowClickHandler}><UnFollow /></div>
-                    :
-                        <div onClick={followClickHandler}><Follow /></div>
                 :
                 null}
 
