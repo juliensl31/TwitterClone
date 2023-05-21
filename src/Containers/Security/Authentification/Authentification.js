@@ -93,6 +93,11 @@ function Authentification(props) {
         setValid(formIsValid);
     };
 
+    // Rafraîchir la page
+    const refreshPage = () => {
+        window.location.reload(false);
+    };
+
     // Concaténer et capitaliser le pseudo 
     const toCapitalizeFirst = str => {
         const capitalizeFirst = str
@@ -105,11 +110,6 @@ function Authentification(props) {
         
             return capitalizeFirst;
         };
-
-    // Fonction pour rafraîchir la page apres l'envoi du formulaire
-    function refreshPage() {
-        window.location.reload(false);
-    }    
 
     // Fonction pour l'inscription
     const registerClickedHandler = () => {
@@ -124,6 +124,38 @@ function Authentification(props) {
         fire.auth()
             .createUserWithEmailAndPassword(user.email, user.password)
             .then(response => {
+
+                // Mettre à jour le profil
+                fire.auth().onAuthStateChanged( (user) => {
+                    if (user) {
+                        user.updateProfile({
+                        displayName: '@' + toCapitalizeFirst(inputs.pseudo.value),
+                        // photoURL: "https://example.com/jane-q-user/profile.jpg"
+                        })
+                        .then(response => {
+                            // Créer le compte
+                            const accountInformation = {
+                                pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
+                                user_id: user.uid
+                            };
+                            // Mettre à jour la base de données
+                            axios.post('/users.json', accountInformation)
+                            .then(response => {
+                                refreshPage();
+                                console.log(response);
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+                            displayName = user.displayName;
+                            // photoURL = user.photoURL;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                    }
+                });
+                
                 toast('Bienvenue');
                 props.history.push(routes.HOME);
             })
@@ -136,38 +168,6 @@ function Authentification(props) {
                         break;
                 }
             });
-
-            // Mettre à jour le profil
-           fire.auth().onAuthStateChanged( (user) => {
-            if (user) {
-                user.updateProfile({ 
-                displayName: '@' + toCapitalizeFirst(inputs.pseudo.value),
-                // photoURL: "https://example.com/jane-q-user/profile.jpg"
-                })
-                .then(response => {
-                    // Créer le compte
-                    const accountInformation = {
-                        pseudo: '@' + toCapitalizeFirst(inputs.pseudo.value),
-                        user_id: user.uid
-                    };
-                    // Mettre à jour la base de données
-                    axios.post('/users.json', accountInformation)
-                    .then(response => {
-                        console.log(response);
-                        refreshPage();
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-                    displayName = user.displayName;
-                    // photoURL = user.photoURL;
-                })
-                .catch(error => {
-                    console.log(error);
-                });     
-            }
-        });
-            
     };
 
     // Fonction pour la connexion
@@ -205,12 +205,7 @@ function Authentification(props) {
         // Connexion
         fire.auth().signInWithPopup(provider)
         .then(response => {
-            toast('Bienvenue');
-            props.history.push(routes.HOME);
-        })
-        .catch(error => {
-           console.log(error);
-        });
+
         // Mettre à jour le profil
         fire.auth().onAuthStateChanged( (user) => {
             if (user) {
@@ -227,8 +222,8 @@ function Authentification(props) {
                 // Mettre à jour la base de données
                 axios.post('/users.json', accountInformation)
                 .then(response => {
-                    console.log(response);
                     refreshPage();
+                    console.log(response);
                 })
                 .catch(error => {
                     console.log(error);
@@ -240,6 +235,13 @@ function Authentification(props) {
                     console.log(error);
                 });     
             }
+        });
+
+            toast('Bienvenue');
+            props.history.push(routes.HOME);
+        })
+        .catch(error => {
+           console.log(error);
         });
     };
     

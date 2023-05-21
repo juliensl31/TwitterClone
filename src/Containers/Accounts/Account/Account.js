@@ -8,6 +8,8 @@ import classes from './Account.module.css';
 
 // Composants
 import DisplayedTweets from '../../../Components/DisplayedTweets/DisplayedTweets';
+import UnFollow from '../../../Components/UI/Logo/UnFollow';
+import Follow from '../../../Components/UI/Logo/Follow';
 
 // Functions
 function Account(props) {
@@ -16,6 +18,32 @@ function Account(props) {
     // eslint-disable-next-line
     const [account, setAccount] = useState([]);
     const [tweets, setTweets] = useState([]);
+    const [follows, setFollows] = useState([]);
+
+    const currentUser = props.user.uid;
+    const userName = props.user.displayName;
+
+    // ComponentDidMount
+    useEffect(() => {
+        axios.get('/follows.json')
+        .then(response =>{
+
+            let followsArray = [];
+
+            for (let key in response.data) {
+                followsArray.push({
+                    ...response.data[key],
+                    id: key
+                });
+            }
+
+            // Mise à jour du state
+            setFollows(followsArray);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
 
     useEffect(() => {
         // Récupérer les données de l'utilisateur
@@ -70,7 +98,65 @@ function Account(props) {
     .catch(error => {
         console.log(error);
     });
-    }, []); 
+    }, []);
+    
+    // Fonction pour suivre
+    const followClickHandler = () => {
+
+        const follow = {
+              follower: currentUser,
+              followed: props.match.params.pseudo,
+              following: true
+          };
+  
+          // Vérifier que l'utilisateur ne se suit pas lui-même
+          if(follow.followed === userName) {
+              toast.error("Vous ne pouvez pas vous suivre vous-même !");
+              return;
+          }
+          // Mettre à jour la base de données
+          axios.post('/follows.json', follow)
+          .then(response => {
+              console.log(response);
+  
+              // Mettre à jour le state
+              setFollows(prevFollows => [...prevFollows, follow]);            
+              toast("Vous suivez " + props.match.params.pseudo);
+          })
+          .catch(error => {
+              console.log(error);
+          });
+         };
+  
+      // Fonction pour ne plus suivre
+      const unFollowClickHandler = () => {
+  
+          // Récupérer l'id du follow
+          axios.get('/follows.json?orderBy="follower"&equalTo="' + currentUser + '"')
+          .then(response => {
+              let followId = '';
+              for (let key in response.data) {
+                  if(response.data[key].followed === props.match.params.pseudo) {
+                      followId = key;
+                  }
+              }
+              // Supprimer le follow
+              axios.delete('/follows/' + followId + '.json')
+              .then(response => {
+                  console.log(response);
+  
+                  // Mettre à jour le state
+                  setFollows(prevFollows => prevFollows.filter(follow => follow.id !== followId));
+                  toast("Vous ne suivez plus " + props.match.params.pseudo);
+              })
+              .catch(error => {
+                  console.log(error);
+              });
+          })
+          .catch(error => {
+              console.log(error);
+          });
+      };
 
 
     // ComponentDidUpdate
@@ -83,7 +169,23 @@ function Account(props) {
             <div className={[classes.Account, 'container'].join(' ')}>
                 <h2>{props.match.params.pseudo}</h2>
                 <div className={classes.Account_info}>
-                    <p><b>{tweets.length}</b> tweets</p>
+                    <p><b>{tweets.length}</b> tweet(s)</p>
+                    {follows.length >= 0 ?
+                        <p><b>{follows.filter(follow => follow.followed === props.match.params.pseudo).length}</b> abonné(s)</p>
+                    :
+                    null}
+                    {follows.length >= 0 && props.match.params.pseudo === userName ?
+                        <p><b>{follows.filter(follow => follow.follower === currentUser).length}</b> abonnement(s)</p>
+                    :
+                    null}
+                     {follows.length >= 0  ?
+                    follows.filter(follow => follow.follower === currentUser && follow.followed === props.match.params.pseudo).length > 0 ?
+                        <div onClick={unFollowClickHandler}><UnFollow /></div>
+                    :
+                        <div onClick={followClickHandler}><Follow /></div>
+                :
+                null}
+
                 </div>
                 
             </div>

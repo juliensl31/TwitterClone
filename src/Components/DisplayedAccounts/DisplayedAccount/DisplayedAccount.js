@@ -17,8 +17,8 @@ function DisplayedAccount(props) {
     // State
     const [tweets, setTweets] = useState([]);
     const [follows, setFollows] = useState([]);
-    // eslint-disable-next-line
     const [user, setUser] = useState('');
+
     const currentUser = user.uid;
     const userName = user.displayName;
 
@@ -63,7 +63,8 @@ function DisplayedAccount(props) {
             setUser('')
         }
         });
-    } ;
+    };
+    
 
      // Fonction pour suivre
      const followClickHandler = () => {
@@ -83,6 +84,9 @@ function DisplayedAccount(props) {
         axios.post('/follows.json', follow)
         .then(response => {
             console.log(response);
+
+            // Mettre à jour le state
+            setFollows(prevFollows => [...prevFollows, follow]);            
             toast("Vous suivez " + props.account.pseudo);
         })
         .catch(error => {
@@ -106,6 +110,9 @@ function DisplayedAccount(props) {
             axios.delete('/follows/' + followId + '.json')
             .then(response => {
                 console.log(response);
+
+                // Mettre à jour le state
+                setFollows(prevFollows => prevFollows.filter(follow => follow.id !== followId));
                 toast("Vous ne suivez plus " + props.account.pseudo);
             })
             .catch(error => {
@@ -150,18 +157,18 @@ function DisplayedAccount(props) {
             </Link>
             <div className={classes.footer}>
                 {tweets.length > 0 ?
-                    <div><b>{tweets.filter(tweet => tweet.auteur === props.account.pseudo).length}</b> Tweets</div>
+                    <div><b>{tweets.filter(tweet => tweet.auteur === props.account.pseudo).length}</b> Tweet(s)</div>
                 : 
                 null}
-                {follows.length > 0 ?
-                    <div><b>{follows.filter(follow => follow.followed === props.account.pseudo).length}</b> Abonnés </div>
+                {follows.length >= 0 ?
+                    <div><b>{follows.filter(follow => follow.followed === props.account.pseudo).length}</b> Abonné(s) </div>
                 :
                 null}
-                {follows.length > 0 && userName === props.account.pseudo ?
-                    <div><b>{follows.filter(follow => follow.follower === currentUser).length}</b> Abonnements</div>
+                {follows.length >= 0 && userName === props.account.pseudo ?
+                    <div><b>{follows.filter(follow => follow.follower === currentUser).length}</b> Abonnement(s)</div>
                 :
                 null}
-                {follows.length > 0  ?
+                {follows.length >= 0  ?
                     follows.filter(follow => follow.follower === currentUser && follow.followed === props.account.pseudo).length > 0 ?
                         <div onClick={unFollowClickHandler}><UnFollow /></div>
                     :
