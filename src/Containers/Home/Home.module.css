@@ -1,0 +1,17 @@
+.Home h1 {
+    margin-bottom: 35px;
+}
+.mainLink {
+    text-align: right;
+}
+
+.mainLink a {
+    text-decoration: none;
+    margin-right: 15px;
+    color: #00818A;
+}
+
+.mainLink a:hover {
+    color: #01646b;
+    font-weight: bold;
+}

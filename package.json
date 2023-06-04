@@ -24,7 +24,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b master -d build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -51,5 +51,5 @@
   "devDependencies": {
     "@types/prop-types": "^15.7.5"
   },
-  "homepage": "https://juliensl31.github.io/TwitterClone"
+  "homepage": "https://juliensl31.github.io/twitter-clone"
 }

@@ -1,0 +1,56 @@
+.Followed {
+    width: 550px;
+    padding: 0 15px;
+    background-color: #404B69;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    height: 100%;
+    margin-bottom: 25px;
+    border: 1px solid silver;
+    border-radius: 8px;
+}
+
+.Follow h1 {
+    margin-bottom: 35px;
+}
+
+.Follow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.Followed h2 {
+    text-align: start;
+    margin-bottom: 10px;
+}
+
+.Followed:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    color: white !important;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+    margin: 15px;
+}
+.link:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    border-top: 1px solid silver;
+    padding: 15px;
+    text-align: end;
+}
+
+.footer b {
+    margin-left: 10px;
+}
